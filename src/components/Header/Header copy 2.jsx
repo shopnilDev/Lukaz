@@ -229,25 +229,8 @@ export default function Header({ mainMenus, categories, notices }) {
                              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 " />
                         </h4>
                           {/* last nested menu items list */}
-
                         <ul
-                          className={`block lg:hidden space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-gray-600
-                            transition-all duration-300 ease-in-out overflow-hidden
-                          `}
-                        >
-                          {item?.childs?.map((child, j) => (
-                            <li
-                              key={j}
-                              className="hover:text-[#3A9E75] cursor-pointer truncate"
-                              onClick={() => handleMenuItem(child)}
-                            >
-                              {child?.name}
-                            </li>
-                          ))}
-                        </ul>
-
-                        <ul
-                          className={` hidden lg:block space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-gray-600
+                          className={`space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-gray-600
                             transition-all duration-300 ease-in-out overflow-hidden
                             ${hoveredSubItem === item?.slug
                               ? "max-h-96 opacity-100 translate-y-0"
