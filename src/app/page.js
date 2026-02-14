@@ -27,7 +27,6 @@ export default async function Home() {
   // const reviews=await getReviews();
   // console.log("reviews",reviews?.data?.reviews)
 
-  // console.log("featureItems", featureItems)
 
   return (
     <div className="">
