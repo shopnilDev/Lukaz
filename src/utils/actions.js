@@ -176,6 +176,31 @@ export async function getCategories() {
   }
 }
 
+
+
+export async function getShopByCategories() {
+  const API_URL = `${baseUrl}/api/shop-by`;
+
+  try {
+    const res = await fetch(API_URL, {
+      next: { revalidate: 30 }, 
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch brands: ${res.statusText}`);
+    }
+    
+    const json = await res.json();
+
+    return json || [];
+  } catch (error) {
+    console.error("Error fetching brands:", error);
+    return []; 
+  }
+}
+
+
+
 export async function getNotices() {
   const API_URL = `${baseUrl}/api/notices`;
 

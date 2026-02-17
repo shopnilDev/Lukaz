@@ -247,17 +247,17 @@ export default function Header({ mainMenus, categories, notices }) {
                         </ul>
 
                         <ul
-                          className={` hidden lg:grid grid-cols-3 gap-6 space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-gray-600
-                            transition-all duration-300 ease-in-out overflow-hidden 
+                          className={` hidden lg:block space-y-1.5 sm:space-y-2.5 text-xs sm:text-sm text-gray-600
+                            transition-all duration-300 ease-in-out overflow-hidden
                             ${hoveredSubItem === item?.slug
-                              ? " opacity-100 translate-y-0 overflow-y-auto"
+                              ? "max-h-96 opacity-100 translate-y-0"
                               : "max-h-0 opacity-0 -translate-y-2"
                             }`}
                         >
                           {item?.childs?.map((child, j) => (
                             <li
                               key={j}
-                              className="hover:text-[#3A9E75] cursor-pointer truncate "
+                              className="hover:text-[#3A9E75] cursor-pointer truncate"
                               onClick={() => handleMenuItem(child)}
                             >
                               {child?.name}

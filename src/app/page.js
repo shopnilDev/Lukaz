@@ -5,10 +5,9 @@ import GenderCategoryList from "@/components/home/GenderCategoryList";
 import ProductSlider from "@/components/home/ProductSlider";
 import RatingSlider from "@/components/home/RatingSlider";
 import ShopByBrandsSlider from "@/components/home/ShopByBrandsSlider";
-import TopBanner from "@/components/home/TopBanner";
 import VideoSection from "@/components/home/VideoSection";
 import Container from "@/components/shared/Container";
-import { getBrands, getCategories, getProductByCategory, getProducts, getReviews, getVideos } from "@/utils/actions";
+import { getBrands, getCategories, getProductByCategory, getProducts, getReviews, getShopByCategories,  getVideos } from "@/utils/actions";
 import FeatureItems from "@/components/home/FeatureItems";
 import WelcomeSection from "@/components/home/WelcomeSection";
 import AccessoriesSlider from "@/components/home/AccessoriesSlider";
@@ -23,6 +22,7 @@ export default async function Home() {
   const categories = await getCategories()
   const featureItems = await getProductByCategory(19)
    const videos = await getVideos();
+   const shopByCategories = await getShopByCategories()
 
   // const reviews=await getReviews();
   // console.log("reviews",reviews?.data?.reviews)

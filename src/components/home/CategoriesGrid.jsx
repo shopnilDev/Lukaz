@@ -26,8 +26,7 @@ const CategoriesGrid = ({ categories }) => {
       </div>
 
       <div className="mx-auto max-w-[1640px] px-3 sm:px-4 md:px-16 grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-4">
-        {categories.slice(0, 15).map((category, idx) => (
-
+        {categories?.slice(0, 15).map((category, idx) => (
 
           <div
           key={idx}
@@ -49,8 +48,8 @@ const CategoriesGrid = ({ categories }) => {
             <Link
               onClick={() => handleFilter(category?.id)}
               href={`/shop/${category?.slug}`}
-              className="absolute text-center bottom-7 left-4 right-4 text-white text-xl font-bold space-grotesk">
-              {category?.name.toUpperCase()}
+              className="absolute text-center bottom-7 left-4 right-4 text-[#3A9E75] text-xl font-bold space-grotesk">
+              {category?.name?.toUpperCase()}
             </Link>
           </div>
 
