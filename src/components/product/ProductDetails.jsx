@@ -57,7 +57,7 @@ export default function ProductDetails({ product }) {
   const [totalStock, setTotalStock] = useState("")
 
 
-  
+
 
   useEffect(() => {
     const img = product?.color_thumbnails
@@ -65,11 +65,15 @@ export default function ProductDetails({ product }) {
     setSelectedColor(product?.color)
     setSelectedColourSlug(product?.slug)
     setSelectedItemImage(product?.color_icon_small)
-    const galleriesArray = JSON.parse(product?.color_galleries)
-    setSelectedColourGalleries(galleriesArray)
-    const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock) , 0)
 
-      console.log("calculate_total_stock---", product?.additionals)
+    let galleriesArray;
+    if (product) {
+      galleriesArray = JSON?.parse(product?.color_galleries)
+    }
+    setSelectedColourGalleries(galleriesArray)
+    const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock), 0)
+
+    // console.log("calculate_total_stock---", product?.additionals)
 
     // setTotalStock(calculate_total_stock)
 
@@ -369,7 +373,7 @@ export default function ProductDetails({ product }) {
           {totalStock &&
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full
-               ${totalStock> 0 ? "bg-green-500" : "bg-red-500"}`} />
+               ${totalStock > 0 ? "bg-green-500" : "bg-red-500"}`} />
               <span className="text-sm md:text-base text-gray-600">
                 {totalStock > 0 ? `In Stock (${totalStock})` : "Out of Stock"}
               </span>
