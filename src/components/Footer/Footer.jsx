@@ -61,7 +61,7 @@ export default function Footer() {
   return (
     <footer className="overflow-hidden">
       <div className="bg-[#3A9E75] pt-12 pb-6">
-        <div className="text-white mx-auto max-w-[1640px] px-3 sm:px-4 md:px-16">
+        <Container className="text-white mx-auto max-w-[1640px] ">
           {/* Newsletter */}
           <Subscription />
 
@@ -183,7 +183,7 @@ export default function Footer() {
 
 
 
-        </div>
+        </Container>
       </div>
       <Container className="py-3 text-center bg-white">
         <p>Copyright © 2025 B-Lukaz | All Rights Reserved.</p>

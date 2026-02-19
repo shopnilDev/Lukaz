@@ -5,7 +5,7 @@ async function getProductBySlug(slug) {
 
 
   const res = await fetch(`${process.env.BASE_URL}/api/products/${slug}`, {
-    cache: "no-store", // always get fresh data
+    cache: "no-store",
   });
 
   // console.log("res single fetch", res)
@@ -16,12 +16,10 @@ async function getProductBySlug(slug) {
   return data
 }
 
-// Dynamic metadata
+//  metadata
 export async function generateMetadata({ params }) {
- const resolvedParams = await params;
+  const resolvedParams = await params;
   const slug = resolvedParams.slug;
-
-
 
   const data = await getProductBySlug(slug);
   const product = data?.data[0]
@@ -50,7 +48,7 @@ export async function generateMetadata({ params }) {
 
 // Page Component
 export default async function ProductPage({ params }) {
- const resolvedParams = await params;
+  const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
   const product = await getProductBySlug(slug);

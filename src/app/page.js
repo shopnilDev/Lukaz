@@ -12,6 +12,9 @@ import FeatureItems from "@/components/home/FeatureItems";
 import WelcomeSection from "@/components/home/WelcomeSection";
 import AccessoriesSlider from "@/components/home/AccessoriesSlider";
 import OutletsSection from "@/components/home/OutletsSection";
+import NestedCategoryGrid from "@/components/home/NestedCategoryGrid ";
+
+
 const baseUrl = process.env.BASE_URL;
 
 
@@ -37,7 +40,7 @@ export default async function Home() {
       <Container>
         {/* <Banner/> */}
         <WelcomeSection />
-        <GenderCategoryList />
+        <NestedCategoryGrid />
         <ProductSlider products={products?.data} />
       </Container>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';   
+import { Navigation, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -11,20 +11,21 @@ import axiosInstance from '@/utils/axiosInstance';
 import ProductListSkeleton from '../Skeletons/ProductListSkeleton';
 
 const tabs = [
-  { label: 'Apparel', key: 'apparel', id: 17 },
-  { label: 'Footwear', key: 'footwear', id: 18 },
+  { label: 'Apparel', key: 'apparel', id: 78 },
+  { label: 'Sneakers', key: 'footwear', id: 1 },
+  { label: 'Luxury', key: 'footwear', id: 85 }
 ];
 
-export default function ProductSlider({ products }) {
+export default function ProductSlider() {
 
   const [productsData, setProductsData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState(17);
+  const [activeTab, setActiveTab] = useState(78);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);   
+      setLoading(true);
 
       try {
         const res = await axiosInstance.get(`/products?category_id=${activeTab}`);
@@ -87,7 +88,7 @@ export default function ProductSlider({ products }) {
           prevEl: '.swiper-button-prev-custom',
         }}
 
-        autoplay={{                 
+        autoplay={{
           delay: 2000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
@@ -101,7 +102,7 @@ export default function ProductSlider({ products }) {
           1624: { slidesPerView: 6.2 },
         }}
 
-        modules={[Navigation, Autoplay]}  
+        modules={[Navigation, Autoplay]}
 
         onInit={(swiper) => {
           swiper.params.navigation.prevEl = '.swiper-button-prev-custom';
@@ -110,13 +111,18 @@ export default function ProductSlider({ products }) {
           swiper.navigation.update();
         }}
       >
-        {loading && <ProductListSkeleton />}
+        {loading ? (
+          <ProductListSkeleton />
+        ) : productsData?.length === 0 ? (
+          <h1 className="text-center w-full py-10">No Products Found</h1>
+        ) : (
+          productsData?.data?.map((item) => (
+            <SwiperSlide key={item.id}>
+              <ProductCard item={item} />
+            </SwiperSlide>
+          ))
+        )}
 
-        {productsData?.data?.map((item) => (
-          <SwiperSlide key={item.id}>
-            <ProductCard item={item} />
-          </SwiperSlide>
-        ))}
       </Swiper>
     </div>
   );

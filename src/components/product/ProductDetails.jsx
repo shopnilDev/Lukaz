@@ -40,7 +40,6 @@ export default function ProductDetails({ product }) {
   //   const { slug } = useParams();
   const { dispatch } = useContext(CartContext);
   const { state: wishListState, dispatch: wishListDispatch } = useContext(WishListContext);
-  //   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedSize, setSelectedSize] = useState(null);
@@ -53,44 +52,75 @@ export default function ProductDetails({ product }) {
   const [mainImage, setMainImage] = useState("")
   const [customSlug, setCustomSlug] = useState("")
   const [selectedItemFromAdditional, setSelectItemFromAdditional] = useState({})
+  const [selectedColourGalleries, setSelectedColourGalleries] = useState([])
 
+  const [totalStock, setTotalStock] = useState("")
+
+
+  
 
   useEffect(() => {
     const img = product?.color_thumbnails
     setMainImage(img)
     setSelectedColor(product?.color)
     setSelectedColourSlug(product?.slug)
-
     setSelectedItemImage(product?.color_icon_small)
+    const galleriesArray = JSON.parse(product?.color_galleries)
+    setSelectedColourGalleries(galleriesArray)
+    const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock) , 0)
+
+      console.log("calculate_total_stock---", product?.additionals)
+
+    // setTotalStock(calculate_total_stock)
+
   }, [product]);
 
   useEffect(() => {
-    const selectedtem = product?.additionals.find((item) => item?.additional_key == customSlug) || {}
-  
-    setSelectItemFromAdditional(selectedtem)
+    // const selectedtem = product?.additionals?.find((item) => item?.additional_key == customSlug) || {}
+    const normalizedSlug = customSlug?.replace(/\s+/g, "_");
+    const selectedItem =
+      product?.additionals?.find(
+        (item) => item?.additional_key === normalizedSlug
+      ) || {};
+
+    // console.log("product", product)
+    // console.log("customSlug", customSlug)
+    // console.log("selectedtem", selectedItem)
+
+
+
+
+    setSelectItemFromAdditional(selectedItem);
+
+
   }, [customSlug]);
 
 
 
   const handleColorSelect = (item) => {
+
+
+    const galleriesArray = JSON.parse(item?.color_galleries)
+    setSelectedColourGalleries(galleriesArray)
     setSelectedColor(item?.color)
     setSelectedColourSlug(item?.slug)
     setMainImage(item?.color_thumbnails)
     setSelectedItemImage(item?.color_icon_small)
-    setCustomSlug(`${product?.product_id}_${item?.color?.toLowerCase()}_${selectedSize}`)
-
+    setCustomSlug(`${product?.product_id}_${item?.color?.toLowerCase()}_${selectedSize?.toLowerCase()}`)
   }
+
+
 
   const handleSizeSelect = (item) => {
     setSelectedSize(item)
-    setCustomSlug(`${product?.product_id}_${selectedColor.toLowerCase()}_${item}`)
+    setCustomSlug(`${product?.product_id}_${selectedColor.toLowerCase()}_${item.toLowerCase()}`)
   }
-
-
 
   const isPreOrderRequired = () => {
 
-    if (product?.product?.is_pre_order == 1 && selectedItemFromAdditional?.stocks_sum_stock == 0) {
+    // console.log("selectedItemFromAdditional", selectedItemFromAdditional)
+
+    if (product?.product?.is_pre_order == 1 && selectedItemFromAdditional?.stocks_sum_stock < 1) {
       return true;
     }
     return false;
@@ -100,10 +130,9 @@ export default function ProductDetails({ product }) {
     return selectedItemFromAdditional?.stocks_sum_stock > 0
   }
 
+
   const isButtonDisable = () => {
-
-
-    if (product?.product?.is_pre_order == 0 && selectedItemFromAdditional?.stocks_sum_stock == 0) {
+    if (product?.product?.is_pre_order == 0 && selectedItemFromAdditional?.stocks_sum_stock < 1) {
       return true;
     }
     return false;
@@ -125,8 +154,8 @@ export default function ProductDetails({ product }) {
     toast.success(` Added to cart`);
   }
 
-// for buy now button
-  const handleBuyNow= () => {
+  // for buy now button
+  const handleBuyNow = () => {
     const payload = {
       productData: product,
       quantity,
@@ -139,9 +168,8 @@ export default function ProductDetails({ product }) {
     }
     // console.log("cart payload",payload)
     dispatch({ type: "ADD_ITEM", payload });
-   
-  }
 
+  }
 
   const isInWishlist = (slug) => {
     const exists = wishListState.items.find(
@@ -150,7 +178,6 @@ export default function ProductDetails({ product }) {
     return exists;
 
   }
-
 
   const handlewishList = () => {
     const payload = {
@@ -176,10 +203,9 @@ export default function ProductDetails({ product }) {
 
   }
 
-  // console.log("product details", product)
 
-
-
+  // console.log("product details isButtonDisable ", isButtonDisable())
+  // console.log("product details isPreOrderRequired ", isPreOrderRequired())
   if (loading) {
     return (
       <>
@@ -278,17 +304,18 @@ export default function ProductDetails({ product }) {
                 1024: { slidesPerView: 6, spaceBetween: 2 },
               }}
             >
-              {product?.gallaries?.map((item, index) => (
+              {selectedColourGalleries?.map((item, index) => (
                 <SwiperSlide key={index} className="cursor-pointer ">
                   <div
-                    onClick={() => handleColorSelect(item)}
-                    className={`aspect-square rounded-lg overflow-hidden w-18 h-18 sm:w-24 sm:h-24  hover:border-teal-700  ${selectedColor === item?.color
+                    onClick={() => setMainImage(item)}
+                    // onClick={() => handleColorSelect(item)}
+                    className={`aspect-square rounded-lg overflow-hidden w-18 h-18 sm:w-24 sm:h-24  hover:border-teal-700  ${mainImage === item
                       ? "border-2 border-teal-700 "
                       : "  "
 
                       }`}>
                     <img
-                      src={getImageUrl("products", item?.color_icon)}
+                      src={getImageUrl("products", item)}
 
                       alt={`Thumbnail ${index + 1}`}
                       className="w-full h-full object-cover border-2 border-gray-300 rounded-lg"
@@ -324,15 +351,13 @@ export default function ProductDetails({ product }) {
               {product?.product?.regular_price && (
                 <>
                   <span className="text-xl md:text-2xl  lg:text-3xl font-semibold text-gray-500 line-through">Tk {product?.product?.regular_price}</span>
-                  {/* <span className="bg-red-100 text-red-800 text-sm font-medium px-2 py-1 rounded">
-                    ৳ {product?.product?.discount} OFF
-                  </span> */}
+
                 </>
               )}
               <span className="text-xl md:text-2xl  lg:text-3xl font-bold text-gray-900">Tk {product?.product?.current_price}</span>
               {product?.product?.regular_price && (
                 <>
-                  {/* <span className="text-xl text-gray-500 line-through">৳ {product?.product?.regular_price}</span> */}
+
                   <span className="bg-black text-white text-sm font-medium px-2 py-1 rounded">
                     SAVE {Math.floor(100 / product?.product?.regular_price * product?.product?.discount)}%
                   </span>
@@ -341,15 +366,16 @@ export default function ProductDetails({ product }) {
             </div>
           </div>
           {/* Stock Status */}
-          {selectedSize &&
+          {totalStock &&
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full
-               ${selectedItemFromAdditional?.stocks_sum_stock > 0 ? "bg-green-500" : "bg-red-500"}`} />
-              <span className="text-sm text-gray-600">
-                {selectedItemFromAdditional.stocks_sum_stock > 0 ? `In Stock (${selectedItemFromAdditional?.stocks_sum_stock})` : "Out of Stock"}
+               ${totalStock> 0 ? "bg-green-500" : "bg-red-500"}`} />
+              <span className="text-sm md:text-base text-gray-600">
+                {totalStock > 0 ? `In Stock (${totalStock})` : "Out of Stock"}
               </span>
 
             </div>}
+
           {/* Color Selection */}
           <div className="bg-gray-100 p-4 rounded-md">
             {selectedColor && (
@@ -424,24 +450,39 @@ export default function ProductDetails({ product }) {
             </div>
           </div>
 
-          {/* Quantity */}
+          {/* Quantity  and Stock Status*/}
           <div>
             <h3 className="text-sm font-medium text-gray-900 mb-3">Quantity</h3>
 
-            <div className="flex items-center border border-gray-300 rounded-md w-32">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-3 bg-[#ECF5F1] hover:bg-gray-100 rounded-l-md ">
-                <Minus size="18" />
-              </button>
-              <span className="flex-1 text-center">{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)}
-                className="p-3 bg-[#ECF5F1] hover:bg-gray-100 rounded-r-md ">
-                <Plus size="18" />
-              </button>
+            <div className="flex flex-wrap gap-4 md:gap-8">
+
+              <div className="flex items-center border border-gray-300 rounded-md w-32">
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="p-3 bg-[#ECF5F1] hover:bg-gray-100 rounded-l-md ">
+                  <Minus size="18" />
+                </button>
+                <span className="flex-1 text-center">{quantity}</span>
+                <button onClick={() => setQuantity(quantity + 1)}
+                  className="p-3 bg-[#ECF5F1] hover:bg-gray-100 rounded-r-md ">
+                  <Plus size="18" />
+                </button>
+              </div>
+              {/* Stock Status */}
+              {selectedSize &&
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full
+               ${selectedItemFromAdditional?.stocks_sum_stock > 0 ? "bg-green-500" : "bg-red-500"}`} />
+                  <span className="text-sm md:text-base text-gray-600">
+                    {selectedItemFromAdditional.stocks_sum_stock > 0 ? `In Stock (${selectedItemFromAdditional?.stocks_sum_stock})` : "Out of Stock"}
+                  </span>
+
+                </div>}
             </div>
+
           </div>
 
-          {/* Add to Cart */}
+
+          {/*order place ad ad to cart*/}
           <div className=" ">
             {selectedSize == null || selectedColor == null ?
               <span className="text-[13px] sm:text-base cursor-pointer w-full border border-gray-300 text-gray-800 py-3 px-3 sm:px-6 rounded-md font-semibold hover:border-gray-500 hover:bg-gray-100 shadow-sm transition-all duration-300">
@@ -450,22 +491,28 @@ export default function ProductDetails({ product }) {
               :
               <div className="flex flex-col sm:flex-row gap-2">
                 <Link
-                  href="/checkout"
-                  onClick={handleBuyNow}
-                  disabled={isButtonDisable()}
-                  className={`w-full cursor-pointer py-3 px-6 text-center rounded-md font-semibold shadow-md hover:shadow-lg
-                   transition-all duration-300 disabled:cursor-not-allowed 
-                    ${isPreOrderRequired()
-                    ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white hover:from-orange-700 hover:to-orange-600 disabled:from-gray-300 disabled:to-gray-300 disabled:text-gray-600"
-                    : "  bg-[#3A9E75] text-white  disabled:from-gray-300 disabled:to-gray-300 disabled:text-gray-600"
+                  href={isButtonDisable() ? "#" : "/checkout"}
+                  onClick={(e) => {
+                    if (isButtonDisable()) {
+                      e.preventDefault();
+                      return;
                     }
-                    `}
+                    handleBuyNow();
+                  }}
+                  className={`w-full py-3 px-6 text-center rounded-md font-semibold shadow-md transition-all duration-300
+                  ${isButtonDisable()
+                      ? "pointer-events-none opacity-50 cursor-not-allowed bg-gray-300 text-gray-600"
+                      : isPreOrderRequired()
+                        ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white hover:from-orange-700 hover:to-orange-600"
+                        : "bg-[#3A9E75] text-white"
+                    }
+  `}
                 >
-                   {isPreOrderRequired() ? "Pre-Order" : "Buy Now"}
-                  
+                  {isPreOrderRequired() ? "Pre-Order" : "Buy Now"}
                 </Link>
-              
-                {isPreOrderRequired() ? <></> :  <button
+
+
+                {isPreOrderRequired() ? <></> : <button
                   onClick={handleAddToCart}
                   disabled={isButtonDisable()}
                   className={`w-full cursor-pointer py-3 px-6 rounded-md font-semibold shadow-md hover:shadow-lg disabled:cursor-not-allowed transition-all duration-300 ${isPreOrderRequired()
@@ -474,7 +521,7 @@ export default function ProductDetails({ product }) {
                     }`}
                 >
                   {isPreOrderRequired() ? "Pre-Order" : "Add to Cart"}
-                </button> }
+                </button>}
 
                 <button
                   onClick={handlewishList}
