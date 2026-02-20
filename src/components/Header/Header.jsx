@@ -222,7 +222,7 @@ export default function Header({ mainMenus, categories, notices }) {
                                      cursor-pointer text-sm flex items-center gap-1"
                         >
                           {item?.name}
-                          <ChevronRight size={16} />
+                          {/* <ChevronRight size={16} /> */}
                         </h4>
 
                         {/* Mobile Children */}

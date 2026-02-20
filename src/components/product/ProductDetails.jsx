@@ -73,9 +73,10 @@ export default function ProductDetails({ product }) {
     setSelectedColourGalleries(galleriesArray)
     const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock), 0)
 
-    // console.log("calculate_total_stock---", product?.additionals)
+    console.log("additionals---", product?.additionals)
+    console.log("calculate_total_stock---", calculate_total_stock)
 
-    // setTotalStock(calculate_total_stock)
+    setTotalStock(calculate_total_stock)
 
   }, [product]);
 
@@ -86,24 +87,13 @@ export default function ProductDetails({ product }) {
       product?.additionals?.find(
         (item) => item?.additional_key === normalizedSlug
       ) || {};
-
-    // console.log("product", product)
-    // console.log("customSlug", customSlug)
-    // console.log("selectedtem", selectedItem)
-
-
-
-
     setSelectItemFromAdditional(selectedItem);
-
 
   }, [customSlug]);
 
 
 
   const handleColorSelect = (item) => {
-
-
     const galleriesArray = JSON.parse(item?.color_galleries)
     setSelectedColourGalleries(galleriesArray)
     setSelectedColor(item?.color)
@@ -114,16 +104,13 @@ export default function ProductDetails({ product }) {
   }
 
 
-
   const handleSizeSelect = (item) => {
     setSelectedSize(item)
     setCustomSlug(`${product?.product_id}_${selectedColor.toLowerCase()}_${item.toLowerCase()}`)
   }
 
   const isPreOrderRequired = () => {
-
     // console.log("selectedItemFromAdditional", selectedItemFromAdditional)
-
     if (product?.product?.is_pre_order == 1 && selectedItemFromAdditional?.stocks_sum_stock < 1) {
       return true;
     }
@@ -374,8 +361,8 @@ export default function ProductDetails({ product }) {
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full
                ${totalStock > 0 ? "bg-green-500" : "bg-red-500"}`} />
-              <span className="text-sm md:text-base text-gray-600">
-                {totalStock > 0 ? `In Stock (${totalStock})` : "Out of Stock"}
+              <span className="text-sm md:text-lg text-gray-600">
+                {totalStock > 0 ? `Total Stock: ${totalStock}` : "Out of Stock"}
               </span>
 
             </div>}
