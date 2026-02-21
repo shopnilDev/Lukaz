@@ -140,7 +140,6 @@ export default function ShopPage({ brands, categories }) {
     setIsCategoryDropdownOpen(false) // Close dropdown after selection
   }
   const handleSizeChange = (size) => {
-
     setSelectedSize((prev) => (prev === size ? null : size))
     setIsSizesDropdownOpen(false) // Close dropdown after selection
   }
@@ -195,10 +194,10 @@ export default function ShopPage({ brands, categories }) {
   return (
     <Container className="py-8">
       {/* Filter Section */}
-      <div className="bg-white p-3 sm:p-5 rounded-lg shadow-md mb-8">
+      {/* <div className="bg-white p-3 sm:p-5 rounded-lg shadow-md mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-3  xl:grid-cols-5 2xl:grid-cols-5
          gap-4  mb-6">
-          {/* Search Bar */}
+      
           <div className="">
             <label htmlFor="search" className="sr-only">
               Search Products
@@ -216,7 +215,7 @@ export default function ShopPage({ brands, categories }) {
             />
           </div>
 
-          {/* Price Sort Dropdown */}
+  
           <div className="relative" ref={priceSortRef}>
             <button
               className="w-full h-10 px-4 py-2 border border-gray-300 rounded-md
@@ -253,7 +252,7 @@ export default function ShopPage({ brands, categories }) {
             )}
           </div>
 
-          {/* Brands Filter Dropdown */}
+    
           <div className="relative" ref={brandsRef}>
             <button
               className="w-full h-10 px-4 py-2 border border-gray-300 rounded-md flex justify-between items-center
@@ -286,7 +285,7 @@ export default function ShopPage({ brands, categories }) {
               </div>
             )}
           </div>
-          {/* Categories Filter Dropdown */}
+      
           <div className="relative" ref={categoryRef}>
             <button
               className="w-full h-10 px-4 py-2 border border-gray-300 rounded-md flex justify-between items-center
@@ -321,8 +320,7 @@ export default function ShopPage({ brands, categories }) {
           </div>
 
 
-          {/* Sizes Filter Dropdown */}
-          {/* <div className="relative" ref={sizesRef}>
+          <div className="relative" ref={sizesRef}>
             <button
               className="w-full h-10 px-4 py-2 border border-gray-300 rounded-md flex justify-between items-center text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#3A9E75]
                focus:border-transparent transition-all duration-200"
@@ -352,9 +350,9 @@ export default function ShopPage({ brands, categories }) {
                 </div>
               </div>
             )}
-          </div> */}
+          </div>
 
-          {/* Colors Filter Dropdown */}
+   
           <div className="relative" ref={colorsRef}>
             <button
               className="w-full h-10 px-4 py-2 border border-gray-300 rounded-md 
@@ -384,7 +382,7 @@ export default function ShopPage({ brands, categories }) {
 
         </div>
 
-        {/* Clear Filters Button */}
+      
         <div className="flex justify-end">
           <button
             onClick={() => {
@@ -396,7 +394,9 @@ export default function ShopPage({ brands, categories }) {
             Clear Filters
           </button>
         </div>
-      </div>
+      </div> */}
+
+
       {/* Product Grid */}
       {productListSection}
       {/* Pagination */}
