@@ -58,11 +58,12 @@ export default function ProductDetails({ product }) {
     setSelectedColourSlug(product?.slug)
     setSelectedItemImage(product?.color_icon_small)
 
-    let galleriesArray;
-    if (product) {
+    let galleriesArray=[];
+    if (product?.color_galleries) {
       galleriesArray = JSON?.parse(product?.color_galleries)
     }
-    setSelectedColourGalleries(galleriesArray)
+     setSelectedColourGalleries([product?.color_thumbnails,...galleriesArray])
+    // setSelectedColourGalleries(galleriesArray)
     // const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock), 0)
     const calculate_total_stock = product?.additionals?.reduce(
       (total, item) => total + Math.max(0, item.stocks_sum_stock ?? 0),

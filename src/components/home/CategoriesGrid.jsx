@@ -32,7 +32,7 @@ const shopbyCategories=await getShopByGender();
 
           <div
           key={idx}
-            className="bg-white group h-[300px] md:h-[350px] lg:h-[380px] xl:h-[410px] rounded-md bg-cover bg-center relative overflow-hidden cursor-pointer">
+            className="bg-white group h-[300px] md:h-[300px] lg:h-[330px] xl:h-[340px] rounded-md bg-cover bg-center relative overflow-hidden cursor-pointer">
             <Link
           
               href={`/shop/${category?.name?.slug}`}
