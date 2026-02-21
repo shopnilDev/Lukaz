@@ -40,7 +40,7 @@ export default async function Home() {
       <Container>
         {/* <Banner/> */}
         <WelcomeSection />
-        <NestedCategoryGrid />
+        {/* <NestedCategoryGrid /> */}
         <ProductSlider products={products?.data} />
       </Container>
 

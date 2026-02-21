@@ -26,13 +26,6 @@ import Image from "next/image"
 import ShipingTimeLine from "./ShipingTimeLine"
 
 
-const features = [
-  "React foam midsole for lightweight comfort",
-  "Air Max 270 unit for maximum cushioning",
-  "Breathable mesh upper",
-  "Rubber outsole for durability",
-  "Heel pull tab for easy on and off",
-]
 
 
 
@@ -53,7 +46,6 @@ export default function ProductDetails({ product }) {
   const [customSlug, setCustomSlug] = useState("")
   const [selectedItemFromAdditional, setSelectItemFromAdditional] = useState({})
   const [selectedColourGalleries, setSelectedColourGalleries] = useState([])
-
   const [totalStock, setTotalStock] = useState("")
 
 
@@ -71,10 +63,14 @@ export default function ProductDetails({ product }) {
       galleriesArray = JSON?.parse(product?.color_galleries)
     }
     setSelectedColourGalleries(galleriesArray)
-    const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock), 0)
+    // const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock), 0)
+    const calculate_total_stock = product?.additionals?.reduce(
+      (total, item) => total + Math.max(0, item.stocks_sum_stock ?? 0),
+      0
+    )
 
-    console.log("additionals---", product?.additionals)
-    console.log("calculate_total_stock---", calculate_total_stock)
+    // console.log("additionals---", product?.additionals)
+    // console.log("calculate_total_stock---", calculate_total_stock)
 
     setTotalStock(calculate_total_stock)
 
@@ -95,18 +91,30 @@ export default function ProductDetails({ product }) {
 
   const handleColorSelect = (item) => {
     const galleriesArray = JSON.parse(item?.color_galleries)
-    setSelectedColourGalleries(galleriesArray)
+    // setSelectedColourGalleries(galleriesArray)
+    setSelectedColourGalleries([item?.color_thumbnails,...galleriesArray])
     setSelectedColor(item?.color)
     setSelectedColourSlug(item?.slug)
     setMainImage(item?.color_thumbnails)
     setSelectedItemImage(item?.color_icon_small)
-    setCustomSlug(`${product?.product_id}_${item?.color?.toLowerCase()}_${selectedSize?.toLowerCase()}`)
+    // setCustomSlug(`${product?.product_id}_${item?.color?.toLowerCase()}_${selectedSize?.toLowerCase()}`)
+    setCustomSlug(
+      `${product?.product_id}_${item?.color?.trim().toLowerCase()
+      }_${selectedSize?.trim().toLowerCase()
+      }`
+    )
   }
 
 
   const handleSizeSelect = (item) => {
-    setSelectedSize(item)
-    setCustomSlug(`${product?.product_id}_${selectedColor.toLowerCase()}_${item.toLowerCase()}`)
+    setSelectedSize(item);
+
+    setCustomSlug(
+      `${product?.product_id}_${selectedColor?.trim().toLowerCase()
+      }_${item?.trim().toLowerCase()
+      }`
+    )
+    // setCustomSlug(`${product?.product_id}_${selectedColor.toLowerCase()}_${item.toLowerCase()}`)
   }
 
   const isPreOrderRequired = () => {
@@ -195,8 +203,8 @@ export default function ProductDetails({ product }) {
   }
 
 
-  // console.log("product details isButtonDisable ", isButtonDisable())
-  // console.log("product details isPreOrderRequired ", isPreOrderRequired())
+  // console.log("product details selectedItemFromAdditional ", selectedItemFromAdditional)
+  // console.log("product details customSlug ", customSlug)
   if (loading) {
     return (
       <>
@@ -356,16 +364,20 @@ export default function ProductDetails({ product }) {
               )}
             </div>
           </div>
-          {/* Stock Status */}
-          {totalStock &&
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full
-               ${totalStock > 0 ? "bg-green-500" : "bg-red-500"}`} />
-              <span className="text-sm md:text-lg text-gray-600">
-                {totalStock > 0 ? `Total Stock: ${totalStock}` : "Out of Stock"}
-              </span>
+          {/*Total Stock Status */}
 
-            </div>}
+          <div className="flex items-center gap-2 font-semibold">
+            <div className={`w-2 h-2 rounded-full
+               ${totalStock > 0 ? "bg-green-500" : "bg-red-500"}`} />
+            <span className="text-sm md:text-lg text-gray-800">
+
+              {totalStock > 0 ? `Total Available Stock: ${totalStock}` : "Out of Stock"}
+            </span>
+
+          </div>
+
+
+
 
           {/* Color Selection */}
           <div className="bg-gray-100 p-4 rounded-md">
@@ -460,10 +472,10 @@ export default function ProductDetails({ product }) {
               </div>
               {/* Stock Status */}
               {selectedSize &&
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 font-semibold">
                   <div className={`w-2 h-2 rounded-full
                ${selectedItemFromAdditional?.stocks_sum_stock > 0 ? "bg-green-500" : "bg-red-500"}`} />
-                  <span className="text-sm md:text-base text-gray-600">
+                  <span className="text-sm md:text-base text-gray-900">
                     {selectedItemFromAdditional.stocks_sum_stock > 0 ? `In Stock (${selectedItemFromAdditional?.stocks_sum_stock})` : "Out of Stock"}
                   </span>
 
