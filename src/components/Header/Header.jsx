@@ -163,17 +163,17 @@ export default function Header({ mainMenus, categories, notices }) {
         </div>
 
         {/* Mega Menu */}
-        <div className="relative px-2 sm:px-4 mx-4">
+        <div className="relative px-2 sm:px-4 md:mx-4">
           <div
             ref={dropdownRef}
-            className={`absolute top-3 z-40 mt-1 transition-all duration-500
+            className={`absolute top-3 left-0 z-40 mt-1 transition-all duration-500
               bg-white text-black rounded shadow-lg overflow-hidden
               max-h-[85vh] overflow-y-auto
               ${isMenuOpen
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-3 pointer-events-none"
               }
-              ${hoveredItem ? "w-full left-0" : "w-56 left-0"}
+              ${hoveredItem ? "w-full left-0" : "w-[75%] md:w-56 left-0"}
             `}
           >
             <div className="  hidden sm:flex flex-col sm:flex-row">
