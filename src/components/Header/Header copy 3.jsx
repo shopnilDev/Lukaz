@@ -20,7 +20,6 @@ import { UserContext } from "@/context/UserContext"
 import { useRouter } from "next/navigation"
 import { getChildMenusBySlug } from "@/utils/getChildMenusBySlug"
 import { useFilter } from "@/context/FilterContext"
-import MobileMenu from "./MobileMenu"
 
 export default function Header({ mainMenus, categories, notices }) {
   const { dispatch: dispatchFilterProduct } = useFilter()
@@ -134,7 +133,7 @@ export default function Header({ mainMenus, categories, notices }) {
             </div>
 
             {/* Search + Icons */}
-            <div className="w-full flex justify-end items-center gap-2">
+            <div className="w-full flex justify-end items-center gap-6">
               <div className="hidden sm:flex w-full">
                 <SeachBarwithDropDown />
               </div>
@@ -176,7 +175,7 @@ export default function Header({ mainMenus, categories, notices }) {
               ${hoveredItem ? "w-full left-0" : "w-56 left-0"}
             `}
           >
-            <div className="  hidden sm:flex flex-col sm:flex-row">
+            <div className="flex flex-col sm:flex-row">
               {/* Sidebar */}
               <ul className="bg-gray-50 min-w-[220px]">
                 {mainMenus?.map((item, i) => (
@@ -260,13 +259,6 @@ export default function Header({ mainMenus, categories, notices }) {
                   )}
                 </div>
               )}
-            </div>
-            {/* Mobile Drilldown Menu */}
-            <div className="sm:hidden">
-              <MobileMenu
-                mainMenus={mainMenus}
-                onClose={() => setIsMenuOpen(false)}
-              />
             </div>
 
             {/* Bottom Bar */}

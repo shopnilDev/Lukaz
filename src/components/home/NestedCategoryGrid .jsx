@@ -4,29 +4,7 @@ import { getShopByGender } from '@/utils/actions';
 import NestedCategoryGridCard from '../shared/NestedCategoryGridCard';
 
 
-const cardData = [
-  {
-    catId:9,
-    title: "Men's",
-    image: '/images/catImg/m1.jpg', // Replace with real image paths
-    buttons: ['Shop Shoes', 'Shop Apparel', 'Shop Accessories'],
-    childCatIds:[10,17,21]
-  },
-  {
-    catId:11,
-    title: "Women's",
-    image: '/images/catImg/w1.jpg',
-    buttons: ['Shop Shoes', 'Shop Apparel', 'Shop Accessories'],
-    childCatIds:[10,17,21]
-  },
-  {
-    catId:20,
-    title: 'Kids',
-    image: '/images/catImg/k1.jpg',
-    buttons: ['Shop Shoes', 'Shop Apparel', 'Shop Accessories'],
-    childCatIds:[10,17,21]
-  },
-];
+
 
 export default async function NestedCategoryGrid () {
 

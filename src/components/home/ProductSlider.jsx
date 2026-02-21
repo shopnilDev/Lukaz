@@ -11,9 +11,9 @@ import axiosInstance from '@/utils/axiosInstance';
 import ProductListSkeleton from '../Skeletons/ProductListSkeleton';
 
 const tabs = [
-  { label: 'Apparel', key: 'apparel', id: 78 },
   { label: 'Sneakers', key: 'footwear', id: 1 },
-  { label: 'Luxury', key: 'footwear', id: 85 }
+  { label: 'Luxury', key: 'footwear', id: 85 },
+   { label: 'Apparel', key: 'apparel', id: 78 },
 ];
 
 export default function ProductSlider() {
