@@ -1,6 +1,5 @@
 "use client"
 
-
 import { useState, useRef, useEffect } from "react"
 import { ChevronDown } from "lucide-react"
 import Container from "@/components/shared/Container"
@@ -11,189 +10,154 @@ import { getColorClass } from "@/utils/getColorClass"
 import ProductListSkeleton from "../Skeletons/ProductListSkeleton"
 import { useParams } from "next/navigation"
 import { getItemById } from "@/utils/getItemById"
-import Pagination from "../shared/Pagination"
 
-const allColors = ["white", "black", "red", "green",]
-
+const allColors = ["white", "black", "red", "green"]
 
 export default function ShopPage({ brands, categories }) {
-  const { slug } = useParams();
-  const { state: filterProductState, dispatch: dispatchFilterProduct } = useFilter();
-  const [products, setProducts] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const { slug } = useParams()
+  const { state: filterProductState, dispatch: dispatchFilterProduct } = useFilter()
 
-  const per_page = 15; // items per page
-  // State for filter values
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
+  const per_page = 15
+
   const [searchTerm, setSearchTerm] = useState("")
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
   const [selectedBrand, setSelectedBrand] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
   const [selectedBrandName, setSelectedBrandName] = useState("")
   const [selectedCategoryName, setSelectedCategoryName] = useState("")
   const [selectedSize, setSelectedSize] = useState("")
   const [selectedColor, setSelectedColor] = useState("")
-  const [sortOrder, setSortOrder] = useState("low_to_high") // 'featured', 'lowToHigh', 'highToLow'
-  // Dropdown open states
-  const [isBrandsDropdownOpen, setIsBrandsDropdownOpen] = useState(false)
-  const [isCatgoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false)
-  const [isSizesDropdownOpen, setIsSizesDropdownOpen] = useState(false)
-  const [isColorsDropdownOpen, setIsColorsDropdownOpen] = useState(false)
-  const [isPriceSortDropdownOpen, setIsPriceSortDropdownOpen] = useState(false)
-  // Refs for dropdowns to close on outside click
+  const [sortOrder, setSortOrder] = useState("low_to_high")
+
   const brandsRef = useRef(null)
   const categoryRef = useRef(null)
   const sizesRef = useRef(null)
   const colorsRef = useRef(null)
   const priceSortRef = useRef(null)
 
-  // console.log(" filter test:", filterProductState);
-  // Fetch products whenever filters change
+  //  Search debounce
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 800);
+      setDebouncedSearchTerm(searchTerm)
+    }, 800)
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [searchTerm]);
+    return () => clearTimeout(handler)
+  }, [searchTerm])
 
+  //  Initial filter sync
   useEffect(() => {
     setSelectedColor(filterProductState?.color)
     setSelectedBrand(filterProductState?.brand)
     setSelectedCategory(filterProductState?.category)
     setSelectedBrandName(getItemById(brands, filterProductState?.brand)?.name)
     setSelectedCategoryName(getItemById(categories, filterProductState?.category)?.name)
-
-  }, []);
-
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const query = new URLSearchParams();
-      query.append("category_id", filterProductState?.category);
-      query.append("search", filterProductState?.search);
-      query.append("brand_id", filterProductState?.brand);
-      query.append("color", filterProductState?.color);
-      query.append("sort_by_price", filterProductState?.sort);
-
-      // console.log("queries test:", query.toString());
-
-      // data fetching using search params
-      setLoading(true)
-      const { data } = await axiosInstance.get(`/products?${query.toString()}&page=${currentPage}&per_page=${per_page}`);
-
-      setProducts(data?.data);
-      const totalPages = data?.data?.last_page
-      setTotalPages(totalPages)
-      setLoading(false)
-    };
-
-    fetchProducts();
-  }, [currentPage, debouncedSearchTerm, selectedColor, selectedBrand, selectedCategory, filterProductState]);
-
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (brandsRef.current && !brandsRef.current.contains(event.target)) {
-        setIsBrandsDropdownOpen(false)
-      }
-      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
-        setIsCategoryDropdownOpen(false)
-      }
-      if (sizesRef.current && !sizesRef.current.contains(event.target)) {
-        setIsSizesDropdownOpen(false)
-      }
-      if (colorsRef.current && !colorsRef.current.contains(event.target)) {
-        setIsColorsDropdownOpen(false)
-      }
-      if (priceSortRef.current && !priceSortRef.current.contains(event.target)) {
-        setIsPriceSortDropdownOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
   }, [])
 
-  // Handlers for filter changes (now single selection)
-  const handleSearch = (search) => {
-    setSearchTerm(search)
-    dispatchFilterProduct({ type: "SET_SEARCH", payload: search });
+  //  Fetch FIRST PAGE যখন filters change হয়
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true)
+
+        const query = new URLSearchParams()
+        query.append("category_id", filterProductState?.category || "")
+        query.append("search", filterProductState?.search || "")
+        query.append("brand_id", filterProductState?.brand || "")
+        query.append("color", filterProductState?.color || "")
+        query.append("sort_by_price", filterProductState?.sort || "")
+
+        const { data } = await axiosInstance.get(
+          `/products?${query.toString()}&page=1&per_page=${per_page}`
+        )
+
+        setProducts(data?.data?.data || [])
+        setTotalPages(data?.data?.last_page || 1)
+        setCurrentPage(1)
+      } catch (err) {
+        console.error("Fetch failed", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [filterProductState])
+
+  //  LOAD MORE
+  const handleLoadMore = async () => {
+    if (currentPage >= totalPages || loadingMore) return
+
+    try {
+      setLoadingMore(true)
+      const nextPage = currentPage + 1
+
+      const query = new URLSearchParams()
+      query.append("category_id", filterProductState?.category || "")
+      query.append("search", filterProductState?.search || "")
+      query.append("brand_id", filterProductState?.brand || "")
+      query.append("color", filterProductState?.color || "")
+      query.append("sort_by_price", filterProductState?.sort || "")
+
+      const { data } = await axiosInstance.get(
+        `/products?${query.toString()}&page=${nextPage}&per_page=${per_page}`
+      )
+
+      setProducts(prev => [...prev, ...(data?.data?.data || [])])
+      setCurrentPage(nextPage)
+    } catch (err) {
+      console.error("Load more failed", err)
+    } finally {
+      setLoadingMore(false)
+    }
   }
 
-  const handleBrandChange = (brand) => {
-    dispatchFilterProduct({ type: "SET_BRANDS", payload: brand?.id });
-    setSelectedBrand((prev) => (prev === brand ? null : brand?.id))
-    setSelectedBrandName(brand?.name)
-    setIsBrandsDropdownOpen(false) // Close dropdown after selection
-  }
-  const handleCategoryChange = (cat) => {
-    dispatchFilterProduct({ type: "SET_CATEGORIES", payload: cat?.id });
-    setSelectedCategory((prev) => (prev === cat ? null : cat?.id))
-    setSelectedCategoryName(cat?.name)
-    setIsCategoryDropdownOpen(false) // Close dropdown after selection
-  }
-  const handleSizeChange = (size) => {
-    setSelectedSize((prev) => (prev === size ? null : size))
-    setIsSizesDropdownOpen(false) // Close dropdown after selection
-  }
-  const handleColorChange = (color) => {
-    dispatchFilterProduct({ type: "SET_COLOR", payload: color });
-    setSelectedColor((prev) => (prev === color ? null : color))
-    setIsColorsDropdownOpen(false) // Close dropdown after selection
-  }
-  const handleSortByPrice = (sortby) => {
-    dispatchFilterProduct({ type: "SET_SORT", payload: sortby });
-    setSortOrder(sortby)
-    setIsPriceSortDropdownOpen(false)
-  }
-  // for clear filters
-  const handleFilterState = () => {
-    setSearchTerm("")
-    setSelectedBrand("")
-    setSelectedSize("")
-    setSelectedColor("")
-    setSortOrder("")
-    setSelectedCategory("")
-    setSelectedBrandName("")
-    setSelectedCategoryName("")
-    dispatchFilterProduct({ type: "RESET_FILTERS" });
-
-  }
-
-
-  // console.log("sortOrder shop page",sortOrder)
-
-  let productListSection;
+  //  Product rendering
+  let productListSection
   if (loading) {
-
     productListSection = <ProductListSkeleton />
+  } else {
+    productListSection = products.length > 0 ? (
+      <>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {products.map((product, i) => (
+            <ProductCardShopPage product={product} key={i} />
+          ))}
+        </div>
 
-  }
-  else {
-    productListSection = products?.data?.length > 0 ? (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {products?.data?.map((product, i) => (
-          <ProductCardShopPage product={product} key={i}
-          />
-
-        ))}
-      </div>
+        {currentPage < totalPages && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={handleLoadMore}
+              disabled={loadingMore}
+              className={`px-6 py-3 rounded border transition-all cursor-pointer
+                ${loadingMore
+                  ? "bg-gray-200 text-gray-500"
+                  : "bg-[#3A9E75] text-white hover:bg-[#1d503b]"
+                }`}
+            >
+              {loadingMore ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        )}
+      </>
     ) : (
-      <div className="text-center text-gray-600 text-lg py-10">No products found matching your criteria.</div>
+      <div className="text-center text-gray-600 text-lg py-10">
+        No products found matching your criteria.
+      </div>
     )
   }
 
-
   return (
     <Container className="py-8">
-      {/* Filter Section */}
+      {/* Filter Section  */}
+       {/* Filter Section */}
       {/* <div className="bg-white p-3 sm:p-5 rounded-lg shadow-md mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-3  xl:grid-cols-5 2xl:grid-cols-5
          gap-4  mb-6">
@@ -397,17 +361,7 @@ export default function ShopPage({ brands, categories }) {
       </div> */}
 
 
-      {/* Product Grid */}
       {productListSection}
-      {/* Pagination */}
-      <div>
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </div>
     </Container>
   )
 }
