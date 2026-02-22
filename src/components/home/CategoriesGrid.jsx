@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 
 
-const CategoriesGrid = async({ categories }) => {
+const CategoriesGrid = async() => {
 
 
 const shopbyCategories=await getShopByGender();

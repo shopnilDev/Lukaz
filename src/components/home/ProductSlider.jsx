@@ -13,7 +13,7 @@ import ProductListSkeleton from '../Skeletons/ProductListSkeleton';
 const tabs = [
   { label: 'Sneakers', key: 'footwear', id: 1 },
   { label: 'Luxury', key: 'footwear', id: 85 },
-   { label: 'Apparel', key: 'apparel', id: 78 },
+  { label: 'Apparel', key: 'apparel', id: 78 },
 ];
 
 export default function ProductSlider() {
@@ -21,7 +21,7 @@ export default function ProductSlider() {
   const [productsData, setProductsData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState(78);
+  const [activeTab, setActiveTab] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {

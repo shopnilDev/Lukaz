@@ -44,7 +44,7 @@ export default async function Home() {
         <ProductSlider products={products?.data} />
       </Container>
 
-      <CategoriesGrid categories={categories} />
+      <CategoriesGrid  />
 
       <Container>
         <ShopByBrandsSlider brands={brands} />
