@@ -93,7 +93,8 @@ export default function Header({ mainMenus, categories, notices }) {
     setHoveredItem(null)
     setHoveredSubItem(null)
 
-    router.push("/shop")
+    router.push(`/shop/${item?.slug}`)
+    // router.push("/shop")
   }
 
   const handleHoverItem = item => {
