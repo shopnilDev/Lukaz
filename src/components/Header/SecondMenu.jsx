@@ -5,16 +5,17 @@ import React from 'react'
 
 const menuItems = [
   { label: 'All Items', href: '/shop', },
-  { label: "Men's", href: '/shop/mens',id:9 },
-  { label: "Women's", href: '/shop/womens',id:11  },
-  { label: "Kids'", href: '/shop/kids',id:20 },
+  // { label: "Men's", href: '/shop/mens',id:9 },
+  // { label: "Women's", href: '/shop/womens',id:11  },
+  // { label: "Kids'", href: '/shop/kids',id:20 },
   { label: 'Sneakers', href: '/shop/sneakers',id:13 },
   { label: 'Outfits', href: '/shop/outfits',id:16 },
-  { label: 'Slide', href: '/shop/slide',id:22 },
-  { label: 'Bags', href: '/shop/bags',id:8 },
-  { label: 'Accessories', href: '/shop/accessories',id:21 },
+  { label: 'Luxury', href: '/shop/luxury',id:22 },
+  // { label: 'Slide', href: '/shop/slide',id:22 },
+  // { label: 'Bags', href: '/shop/bags',id:8 },
+  // { label: 'Accessories', href: '/shop/accessories',id:21 },
   // { label: 'Brands', href: '/brands', },
-  { label: 'Our Outlets', href: '/outlets' },
+  // { label: 'Our Outlets', href: '/outlets' },
   { label: 'International Deal', href: '/international-shop'},
 ];
 

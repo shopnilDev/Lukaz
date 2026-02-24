@@ -112,7 +112,7 @@ export default function ShopByCategories({ slug }) {
           gridCols === 5 && "grid-cols-5"
         )}
       >
-        {products.map((product, i) => (
+        {products?.map((product, i) => (
           <ProductCardByCategories
             key={i}
             product={product?.product}
@@ -147,7 +147,7 @@ export default function ShopByCategories({ slug }) {
   );
 
   return (
-    <Container className="py-8 space-y-6">
+    <Container className="py-8 space-y-4">
       <CategoryShopHeader title={catInfo?.name} />
 
       {/* Grid Layout Selector */}
