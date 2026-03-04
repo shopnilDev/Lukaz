@@ -53,7 +53,8 @@ export default function ProductCardShopPage({ product }) {
   return (
     <div
 
-      className="bg-white rounded-sm  overflow-hidden transform transition-all duration-300 hover:shadow-lg  cursor-pointer"
+      className="bg-white rounded-sm  overflow-hidden transform transition-all duration-300 shadow-lg hover:shadow-xl
+      cursor-pointer"
     >
       <div className="relative w-full h-80 ">
         <Link href={`/product/${product?.slug}`}>

@@ -6,10 +6,11 @@ export default function ProductCard({ item }) {
   return (
     <Link
       href={`/product/${item?.slug}`}
-      className="mx-auto cursor-pointer block"
+      className="mx-auto cursor-pointer block shadow-md hover:shadow-lg hover:bg-gray-100 
+     "
     >
       {/* Image Container */}
-      <div className="relative w-full aspect-[4/5] rounded-md overflow-hidden bg-gray-100">
+      <div className="relative w-full aspect-[4/5] rounded-t-md overflow-hidden bg-gray-100">
         <Image
           src={getImageUrl("products", item?.color_thumbnails)}
           alt={item?.product_name || "Product Image"}
@@ -21,7 +22,7 @@ export default function ProductCard({ item }) {
       </div>
 
       {/* Product Info */}
-      <div className="mt-4">
+      <div className="mt-4 px-2">
         <h3 className="text-sm font-semibold text-gray-900 truncate">
           {item?.product_name}
         </h3>
