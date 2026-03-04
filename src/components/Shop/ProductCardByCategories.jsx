@@ -35,8 +35,9 @@ export default function ProductCardByCategories({ product, productFullData }) {
   };
 
   return (
-    <div className="bg-white rounded-sm overflow-hidden transform transition-all duration-300 hover:shadow-lg cursor-pointer">
-      {/* ✅ Use aspect ratio to automatically adjust height */}
+    <div className="bg-white rounded-sm overflow-hidden transform transition-all duration-300 shadow-lg hover:shadow-xl
+     hover:bg-gray-100 cursor-pointer">
+      {/*  Use aspect ratio to automatically adjust height */}
       <div className="relative w-full aspect-[4/5]">
         <Link 
          href={`/product/${productFullData?.slug}`}

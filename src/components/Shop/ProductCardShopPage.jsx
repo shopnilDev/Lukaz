@@ -18,6 +18,9 @@ export default function ProductCardShopPage({ product }) {
   }
 
 
+  console.log("tes porudtc",product)
+
+
   const handleWishList = (product) => {
 
     const payload = {
