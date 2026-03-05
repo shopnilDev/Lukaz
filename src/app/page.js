@@ -23,12 +23,12 @@ export default async function Home() {
   const brands = await getBrands();
   const reviews = await getReviews()
   const categories = await getCategories()
-  const featureItems = await getProductByCategory(19)
+  const featureItems = await getProductByCategory(91)
    const videos = await getVideos();
    const shopByCategories = await getShopByCategories()
 
   // const reviews=await getReviews();
-  // console.log("reviews",reviews?.data?.reviews)
+  // console.log("featureItems",featureItems)
 
 
   return (
