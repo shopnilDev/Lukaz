@@ -26,7 +26,7 @@ export default function BannerSlider({banners}) {
         }}
         loop={true}
         pagination={{ clickable: true }}
-        className="h-full w-full rounded-md"
+        className="h-full w-full "
       >
         {banners.map((banner, index) => (
           <SwiperSlide key={index}>
@@ -35,7 +35,7 @@ export default function BannerSlider({banners}) {
                 src={getImageUrl("banners",banner?.image)}
                 alt={`Banner ${index + 1}`}
                 fill
-                className="object-fit rounded-md"
+                className="object-fit "
                 priority={index === 0}
               />
             </div>

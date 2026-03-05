@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 
 const menuItems = [
-  { label: 'All Items', href: '/shop', },
+  // { label: 'All Items', href: '/shop', },
   // { label: "Men's", href: '/shop/mens',id:9 },
   // { label: "Women's", href: '/shop/womens',id:11  },
   // { label: "Kids'", href: '/shop/kids',id:20 },
@@ -35,14 +35,14 @@ const handleCategoryFilter=(item)=>{
 
   return (
     <div>
-      <div className="hidden lg:flex justify-center gap-1 py-1 bg-white shadow-sm flex-wrap">
+      <div className="flex justify-center gap-1 py-1 bg-white shadow-sm flex-wrap">
         {menuItems.map((item, index) => (
           <Link
             key={index}
             href={item.href}
             onClick={()=>handleCategoryFilter(item)}
           
-            className={`text-sm font-semibold px-4 py-2 rounded-md transition ${
+            className={`text-sm font-semibold px-4 py-2 rounded-sm transition bg-[#3a9e741c] ${
               item.label === 'All Items'
                 ? 'bg-[#ff5b2e] text-white font-bold'
                 : 'text-black hover:text-[#3A9E75]'
