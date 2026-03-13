@@ -37,6 +37,7 @@ export default function CartCheckoutPage() {
   const [address, setAddress] = useState("")
   const [selectedDistrict, setSelectedDistrict] = useState("")
   const [shippingCharge, setShippingCharge] = useState(0)
+   const [expressDeliveryCharge, setExpressDeliveryCharge] = useState(3000)
   const [discountAmount, setDiscountAmount] = useState(0)
   const [isPreOrderItemInCart, setIsPreOrderItemInCart] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -192,24 +193,21 @@ export default function CartCheckoutPage() {
 
   }
   const handleThana = (value) => {
-
     setThana(value)
-
   }
 
 
   // Calculate Subtotal of Cart Items
   const cartSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   // Calculate Grand Total
-  const grandTotal = cartSubtotal + shippingCharge - discountAmount
+  let grandTotal = cartSubtotal + shippingCharge - discountAmount
+
+  // if(isPreOrderItemInCart==1){
+  // grandTotal = grandTotal + expressDeliveryCharge
+  // }
 
 
-  // const isFormValid =
-  //   fullName.trim() !== "" &&
-  //   phoneNumber.trim() !== "" &&
-  //   address.trim() !== "" &&
-  //   selectedDistrict !== "" &&
-  //   selectedPaymentMethod !== ""
+
 
   const validateCheckoutForm = () => {
     if (!fullName.trim()) {
@@ -281,10 +279,7 @@ export default function CartCheckoutPage() {
   }
 
   const handlePlaceOrder = async () => {
-
-
     const errorMessage = validateCheckoutForm();
-
     setLoading(true)
 
     if (!errorMessage) {
@@ -323,7 +318,7 @@ export default function CartCheckoutPage() {
 
       try {
 
-        console.log("Placing order...", orderData);
+        // console.log("Placing order...", orderData);
 
         // condition on placing order if user logged in or not
         let response;
@@ -642,6 +637,12 @@ export default function CartCheckoutPage() {
                 <span>Shipping Charge:</span>
                 <span className="font-semibold">{shippingCharge.toFixed(2)}৳</span>
               </div>
+              {/* {isPreOrderItemInCart==1 && (
+                <div className="flex text-sm  justify-between text-gray-700">
+                  <span>Express Delivery Charge (Pre-Order):</span>
+                  <span className="font-semibold">{expressDeliveryCharge.toFixed(2)}৳</span>
+                </div>
+              )} */}
               <div className="flex text-sm  justify-between text-gray-700">
                 <span>Discount:</span>
                 <span className="font-semibold">{discountAmount}৳</span>

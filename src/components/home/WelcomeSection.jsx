@@ -13,8 +13,6 @@ const menuItems = [
 
 
 
-
-
 export default function WelcomeSection() {
     const { dispatch: dispatchFilterProduct } = useFilter();
 
@@ -26,28 +24,28 @@ export default function WelcomeSection() {
 
 
     return (
-        <section className="text-center pt-14 px-4">
+        <section className="text-center pt-4 md:pt-14 px-4">
             {/* Title */}
-            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold mb-6">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold md:mb-4">
                 Welcome to the LukazBd
             </h1>
 
             {/* Subtitle */}
-            <p className="text-gray-700 max-w-2xl mx-auto mb-4 text-base">
+            {/* <p className="text-gray-700 max-w-2xl mx-auto mb-4 text-base">
                 Whether you're running for fun or competitively, having the right kit is a must.
                 Not only will it greatly reduce your risk of injuries, but it'll help you to really look the part!
-            </p>
+            </p> */}
 
             {/* Description */}
-            <p className="text-gray-700 max-w-3xl mx-auto mb-8 text-base">
+            {/* <p className="te4xt-gray-700 max-w-3xl mx-auto mb-8 text-base">
                 Sportsshoes.com stocks everything you’ll need; from men's running shoes to gym clothes,
                 right down to the all-important accessories. We also sell a huge range of men's running
                 clothes from leading brands such as adidas, Saucony and Asics, all at fantastically low
                 prices so you can pound the streets, the track or the trail in real style!
-            </p>
+            </p> */}
 
             {/* Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 mx-auto">
+            {/* <div className="flex flex-wrap justify-center gap-4 mx-auto">
                 {menuItems.map((item, index) => (
                     <Link
                         key={index}
@@ -59,7 +57,7 @@ export default function WelcomeSection() {
                     </Link>
                 ))}
                 
-            </div>
+            </div> */}
         </section>
     )
 }

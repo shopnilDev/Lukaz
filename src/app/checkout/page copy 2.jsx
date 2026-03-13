@@ -4,7 +4,6 @@
 // import Image from "next/image"
 // import Container from "@/components/shared/Container"
 // import { ChevronDown, Loader2, Minus, Plus } from "lucide-react"
-// import CustomSelectInput from "@/components/shared/CustomSelectInput"
 // import Link from "next/link"
 // import toast from "react-hot-toast"
 // import axiosInstance from "@/utils/axiosInstance"
@@ -205,12 +204,50 @@
 //   const grandTotal = cartSubtotal + shippingCharge - discountAmount
 
 
-//   const isFormValid =
-//     fullName.trim() !== "" &&
-//     phoneNumber.trim() !== "" &&
-//     address.trim() !== "" &&
-//     selectedDistrict !== "" &&
-//     selectedPaymentMethod !== ""
+//   // const isFormValid =
+//   //   fullName.trim() !== "" &&
+//   //   phoneNumber.trim() !== "" &&
+//   //   address.trim() !== "" &&
+//   //   selectedDistrict !== "" &&
+//   //   selectedPaymentMethod !== ""
+
+//   const validateCheckoutForm = () => {
+//     if (!fullName.trim()) {
+//       return "Full name is required";
+//     }
+
+//     if (!phoneNumber.trim()) {
+//       return "Phone number is required";
+//     }
+
+//     // phone must be numeric
+//     if (!/^\d+$/.test(phoneNumber)) {
+//       return "Phone number must contain only numbers";
+//     }
+
+//     // optional: length check (Bangladesh-friendly)
+//     if (phoneNumber.length < 10 || phoneNumber.length > 15) {
+//       return "Please enter a valid phone number";
+//     }
+
+//     if (!address.trim()) {
+//       return "Address is required";
+//     }
+
+//     if (!selectedDistrict) {
+//       return "Please select a district";
+//     }
+//     if (!thana) {
+//       return "Please select a thana";
+//     }
+
+//     if (!selectedPaymentMethod) {
+//       return "Please select a payment method";
+//     }
+
+//     return null; // ✅ all good
+//   };
+
 
 
 //   const applyPromoCode = async () => {
@@ -233,7 +270,7 @@
 //       else {
 //         setDiscountAmount(data?.discount)
 //       }
-//       console.log("promo code res", data)
+//       // console.log("promo code res", data)
 //       // setDiscountAmount(data?.discount)
 //     } catch (error) {
 //       console.log("faild to get discount by promo code", error)
@@ -245,9 +282,12 @@
 
 //   const handlePlaceOrder = async () => {
 
+
+//     const errorMessage = validateCheckoutForm();
+
 //     setLoading(true)
 
-//     if (isFormValid) {
+//     if (!errorMessage) {
 //       const orderData = {
 //         shipping_cost: shippingCharge,
 //         promo_code: cuponCode || null,
@@ -283,7 +323,7 @@
 
 //       try {
 
-//         // console.log("Placing order...", orderData);
+//         console.log("Placing order...", orderData);
 
 //         // condition on placing order if user logged in or not
 //         let response;
@@ -338,7 +378,7 @@
 //       }
 //     } else {
 //       setLoading(false)
-//       alert("Please fill in all required shipping details")
+//       alert(errorMessage)
 //     }
 //   };
 
@@ -723,7 +763,7 @@
 //                   />
 //                 </div>
 
-//                 {/*                 
+                                
 //                 <div className="flex items-center ">
 //                   <input
 //                     type="radio"
@@ -737,7 +777,7 @@
 //                   <label htmlFor="cod" className="ml-3 block text-base font-medium text-gray-700">
 //                     Cash on Delivery
 //                   </label>
-//                 </div> */}
+//                 </div> 
 
 //               </div>
 //             </div>
@@ -756,15 +796,15 @@
 
 //               <label htmlFor="terms" className="cursor-pointer">
 //                 I agree to the
-               
+
 //                 <Link
 //                   href="/refund-returned"
 //                   target="_blank"
 //                   className="text-[#3A9E75] underline px-1"
 //                 >
-//                    Return Policy
-//                 </Link> 
-//                  and
+//                   Return Policy
+//                 </Link>
+//                 and
 //                 <Link
 //                   href="/terms"
 //                   target="_blank"
@@ -772,13 +812,12 @@
 //                 >
 //                   Terms & Conditions
 //                 </Link>{" "}
-                
+
 //               </label>
 //             </div>
 
 
 
-//             {/* Place Order Button */}
 
 //             {/* Place Order Button */}
 //             <div className="mt-4 text-center">
