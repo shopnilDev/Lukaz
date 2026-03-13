@@ -55,14 +55,14 @@ export default function MobileMenu({ mainMenus, onClose }) {
                   : handleNavigate(item)
               }
             >
-              <span className="text-sm font-semibold tracking-wide">
+              <span className="text-base font-semibold tracking-wide">
                 {item.name}
               </span>
 
               {item?.childs?.length > 0 && (
                 <ChevronRight
                   size={18}
-                  className={`transition-transform duration-300 text-gray-500
+                  className={`transition-transform duration-300 text-gray-700
                     ${expanded[item.slug] ? "rotate-90 text-[#3A9E75]" : ""}
                   `}
                 />
@@ -86,8 +86,8 @@ export default function MobileMenu({ mainMenus, onClose }) {
                         <div
                           className="flex justify-between items-center
                                      py-2 px-2 rounded-lg
-                                     cursor-pointer text-sm
-                                     text-gray-700 hover:bg-white
+                                     cursor-pointer text-[17px]
+                                     text-gray-800 hover:bg-white
                                      active:bg-gray-100 transition"
                           onClick={() =>
                             child?.childs?.length > 0
@@ -100,7 +100,7 @@ export default function MobileMenu({ mainMenus, onClose }) {
                           {child?.childs?.length > 0 && (
                             <ChevronRight
                               size={16}
-                              className={`transition-transform duration-300 text-gray-400
+                              className={`transition-transform duration-300 text-gray-700
                                 ${nestedExpanded[child.slug]
                                   ? "rotate-90 text-[#3A9E75]"
                                   : ""
@@ -123,7 +123,7 @@ export default function MobileMenu({ mainMenus, onClose }) {
                                 {child.childs.map((nested, k) => (
                                   <li
                                     key={k}
-                                    className="text-xs text-gray-500
+                                    className="text-sm text-gray-800
                                                py-1 px-2 rounded-md
                                                cursor-pointer hover:text-[#3A9E75]
                                                hover:bg-white transition"

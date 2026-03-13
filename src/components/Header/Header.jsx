@@ -183,7 +183,7 @@ export default function Header({ mainMenus, categories, notices }) {
                 {mainMenus?.map((item, i) => (
                   <li
                     key={i}
-                    className="flex justify-between px-4 py-3 text-sm
+                    className="flex justify-between px-4 py-3 text-base lg:text-[17px] font-semibold
                                hover:bg-gray-100 hover:text-[#3A9E75]
                                cursor-pointer"
                     onMouseEnter={() => handleHoverItem(item)}
@@ -221,14 +221,14 @@ export default function Header({ mainMenus, categories, notices }) {
                           onClick={() => handleMenuItem(item)}
                           className="font-semibold text-gray-800
                                      hover:text-[#3A9E75]
-                                     cursor-pointer text-sm flex items-center gap-1"
+                                     cursor-pointer text-base flex items-center gap-1"
                         >
                           {item?.name}
                           {/* <ChevronRight size={16} /> */}
                         </h4>
 
                         {/* Mobile Children */}
-                        <ul className="block lg:hidden mt-1 space-y-1 text-xs text-gray-600">
+                        <ul className="block lg:hidden mt-1 space-y-1 text-base text-gray-700">
                           {item?.childs?.map((child, j) => (
                             <li
                               key={j}
@@ -246,7 +246,7 @@ export default function Header({ mainMenus, categories, notices }) {
                   {/* Desktop Full Width Children */}
                   {activeSubmenu?.childs?.length > 0 && (
                     <div className="hidden lg:block border-t pt-4 animate-in fade-in slide-in-from-top-2 duration-200">
-                      <ul className="grid grid-cols-3 xl:grid-cols-4 gap-6 text-sm text-gray-600">
+                      <ul className="grid grid-cols-3 xl:grid-cols-4 gap-6 text-sm text-gray-800">
                         {activeSubmenu.childs.map((child, j) => (
                           <li
                             key={j}

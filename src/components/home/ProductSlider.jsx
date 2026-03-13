@@ -42,7 +42,7 @@ export default function ProductSlider() {
   }, [activeTab]);
 
   return (
-    <div className="py-10 relative">
+    <div className=" py-6 md:py-10 relative">
 
       <div className="flex justify-between items-center mb-6">
         <div className='flex gap-4 items-center'>
