@@ -117,7 +117,7 @@ export default function Header({ mainMenus, categories, notices }) {
       {/* Main Header */}
       <header className="bg-[#3A9E75] py-2 text-white relative">
         <div className="px-2 sm:px-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             {/* Menu Toggle */}
             <button onClick={toggleMenu} className="p-1">
               {isMenuOpen ? (
@@ -135,7 +135,7 @@ export default function Header({ mainMenus, categories, notices }) {
             </div>
 
             {/* Search + Icons */}
-            <div className="w-full flex justify-end items-center gap-2">
+            <div className="w-full flex justify-end items-center gap-2 ">
               <div className="hidden sm:flex w-full">
                 <SeachBarwithDropDown />
               </div>

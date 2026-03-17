@@ -28,7 +28,7 @@ const CategoriesGrid = async () => {
       </div>
 
       <div className="mx-auto max-w-[1640px] px-3 sm:px-4 md:px-16 grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-4">
-        {shopbyCategories?.slice(0, 20).map((category, idx) => {
+        {shopbyCategories?.map((category, idx) => {
 
           const slug = category?.url == "null" ? category?.categories?.[0]?.slug : category?.url
 

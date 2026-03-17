@@ -40,8 +40,8 @@ export default function SecondMenu() {
               onClick={() => handleCategoryFilter(item)}
               className={`text-xs sm:text-sm font-semibold  px-2 py-1.5 md:px-4 md:py-2 rounded-sm transition
               ${isActive
-                  ? 'bg-[#ff5b2e] text-white font-bold'
-                  : 'bg-[#3a9e741c] text-black hover:bg-[#ff5b2e]  hover:text-white'
+                  ? 'bg-[#3a9e74] text-white font-bold'
+                  : 'bg-[#3a9e741c] text-black hover:bg-[#3A9E75]  hover:text-white'
                 }`}
             >
               {item?.label}

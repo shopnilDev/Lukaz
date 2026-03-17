@@ -27,6 +27,11 @@ export default function InternationalOrderPolicy() {
       title: "Currency & Payment",
       description: "All orders are processed in our store’s default currency. Your bank may apply conversion rates and fees when completing international payments.",
     },
+      {
+      icon: Truck,
+      title: "Order On Demand ",
+      description: "Looking for a specific luxury sneaker or over size that is not available in stock? No problem. You can place a special order for any sneakers any size, and we will arrange it for you from our international sources. Just submit your request and get the perfect fit delivered ",
+    },
   ]
 
   const fadeInVariants = {
@@ -107,7 +112,7 @@ export default function InternationalOrderPolicy() {
       >
         <motion.div variants={fadeInVariants} className="mx-auto max-w-[1640px] px-3 sm:px-4 md:px-16 text-center">
           <h3 className="text-4xl font-bold text-gray-900 mb-12">International Order Terms</h3>
-          <motion.div variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <motion.div variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
             {policies.map((value, index) => (
               <motion.div
                 key={index}

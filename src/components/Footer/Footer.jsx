@@ -69,9 +69,20 @@ export default function Footer() {
             <div className='grid gap-5  w-full justify-between grid-cols-1 sm:grid-cols-4'>
               <div className="flex flex-col gap-6 text-md text-white mt-2 mb-8">
                 <div className="flex items-center gap-2">
+                  <a
+                    href="https://m.me/Lukazshopp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <MessageCircle size={18} />
+                    <span>Chat</span>
+                  </a>
+                </div>
+                {/* <div className="flex items-center gap-2">
                   <MessageCircle size={18} />
                   <span>Chat</span>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-2">
                   <a
                     href="https://wa.me/8801752058475"

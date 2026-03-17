@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { FaFacebookMessenger } from "react-icons/fa";
 
 const MessengerButton = () => {
-  const messengerLink = "https://m.me/yourpageusername"; // Replace with your link
+  const messengerLink = "https://m.me/Lukazshopp";
   const [animate, setAnimate] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -37,7 +37,7 @@ const MessengerButton = () => {
         {/* Ripple/Wave Effect */}
         {animate && (
           <>
-          {/* <span className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping-slow"></span> */}
+            {/* <span className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping-slow"></span> */}
             <span className="absolute inset-0 rounded-full bg-gray-300 opacity-30 animate-ping-slow"></span>
             <span className="absolute inset-0 rounded-full bg-gray-400 opacity-30 animate-ping-slower"></span>
           </>
@@ -49,17 +49,17 @@ const MessengerButton = () => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleClick}
-          className="relative flex items-center justify-center w-20 h-20  bg-white  hover:bg-gray-100 text-white rounded-full shadow-lg transition"
+          className="relative flex items-center justify-center w-18 h-18  bg-blue-500  hover:scale-110 text-white rounded-full shadow-lg transition"
           title="Message us on Messenger"
         >
-                      <Image
+          {/* <Image
                         src="/images/others/support3.png"
                         alt="visa"
                         width={60}
                         height={60}
                         className=""
-                      />
-          {/* <FaFacebookMessenger className="text-3xl" /> */}
+                      /> */}
+          <FaFacebookMessenger className="text-4xl" />
         </a>
       </div>
     </div>
