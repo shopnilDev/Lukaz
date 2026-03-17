@@ -20,7 +20,7 @@ export default function PreOrderPolicy() {
     {
       icon: Clock,
       title: "Estimated Delivery",
-      description: "Delivery timelines are estimates and may be subject to changes due to manufacturing, supplier, or logistics delays.",
+      description: "Express Delivery option for faster processing and transit times.",
     },
     {
       icon: CreditCard,

@@ -2,56 +2,53 @@
 // import { useFilter } from '@/context/FilterContext';
 // import Link from 'next/link';
 // import React from 'react'
+// import { usePathname } from 'next/navigation';
 
 // const menuItems = [
-//   // { label: 'All Items', href: '/shop', },
-//   // { label: "Men's", href: '/shop/mens',id:9 },
-//   // { label: "Women's", href: '/shop/womens',id:11  },
-//   // { label: "Kids'", href: '/shop/kids',id:20 },
-//   { label: 'Sneakers', href: '/shop/sneakers',id:13 },
-//   { label: 'Outfits', href: '/shop/outfits',id:16 },
-//   { label: 'Luxury', href: '/shop/luxury',id:22 },
-//   // { label: 'Slide', href: '/shop/slide',id:22 },
-//   // { label: 'Bags', href: '/shop/bags',id:8 },
-//   // { label: 'Accessories', href: '/shop/accessories',id:21 },
-//   // { label: 'Brands', href: '/brands', },
-//   // { label: 'Our Outlets', href: '/outlets' },
-//   { label: 'International Deal', href: '/international-shop'},
+//   { label: 'Sneakers', href: '/shop/sneakers', id: 13 },
+//   { label: 'Outfits', href: '/shop/outfits', id: 16 },
+//   { label: 'Luxury', href: '/shop/luxury', id: 22 },
+//   { label: 'International Deal', href: '/international-shop' },
 // ];
 
-
-
 // export default function SecondMenu() {
-// const { dispatch:dispatchFilterProduct } = useFilter();
 
-// const handleCategoryFilter=(item)=>{
-    
+//   const { dispatch: dispatchFilterProduct } = useFilter();
+//   const pathname = usePathname();
+
+//   // get last part of url
+//   const lastPath = pathname.split('/').filter(Boolean).pop();
+
+//   const handleCategoryFilter = (item) => {
 //     // if(item?.id){
 //     // dispatchFilterProduct({ type: "SET_CATEGORIES", payload: item?.id });
 //     // }
-   
-//     }
-
+//   }
 
 //   return (
 //     <div>
-//       <div className="flex justify-center gap-1 py-1 bg-white shadow-sm flex-wrap">
-//         {menuItems.map((item, index) => (
-//           <Link
-//             key={index}
-//             href={item.href}
-//             onClick={()=>handleCategoryFilter(item)}
-          
-//             className={`text-xs sm:text-sm font-semibold px-2 py-1.5 md:px-4 md:py-2 rounded-sm transition bg-[#3a9e741c] ${
-//               item.label === 'All Items'
-//                 ? 'bg-[#ff5b2e] text-white font-bold'
-//                 : 'text-black hover:text-[#3A9E75]'
-//             }`}
-//           >
-//             {item.label}
-//           </Link>
-//         ))}
-//       </div>  
+//       <div className="flex justify-center gap-1 md:gap-4 lg:gap-6 xl:gap-8 py-1  bg-white shadow-sm flex-wrap">
+//         {menuItems?.map((item, index) => {
+
+//           const itemLastPath = item?.href?.split('/').filter(Boolean).pop();
+//           const isActive = lastPath === itemLastPath;
+
+//           return (
+//             <Link
+//               key={index}
+//               href={item.href}
+//               onClick={() => handleCategoryFilter(item)}
+//               className={`text-xs sm:text-sm font-semibold  px-2 py-1.5 md:px-4 md:py-2 rounded-sm transition
+//               ${isActive
+//                   ? 'bg-[#ff5b2e] text-white font-bold'
+//                   : 'bg-[#3a9e741c] text-black hover:bg-[#ff5b2e]  hover:text-white'
+//                 }`}
+//             >
+//               {item?.label}
+//             </Link>
+//           )
+//         })}
+//       </div>
 //     </div>
 //   )
 // }

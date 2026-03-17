@@ -10,10 +10,15 @@ import ProductCard from '../Cards/ProductCard';
 import axiosInstance from '@/utils/axiosInstance';
 import ProductListSkeleton from '../Skeletons/ProductListSkeleton';
 
+// const tabs = [
+//   { label: 'Sneakers', key: 'footwear', id: 1 },
+//   { label: 'Luxury', key: 'footwear', id: 85 },
+//   { label: 'Apparel', key: 'apparel', id: 78 },
+// ];
 const tabs = [
-  { label: 'Sneakers', key: 'footwear', id: 1 },
-  { label: 'Luxury', key: 'footwear', id: 85 },
-  { label: 'Apparel', key: 'apparel', id: 78 },
+  { label: 'Sneakers', key: 'footwear', id: 1036 },
+  { label: 'Luxury', key: 'footwear', id: 1038 },
+  { label: 'Apparel', key: 'apparel', id: 1037 },
 ];
 
 export default function ProductSlider() {

@@ -27,7 +27,7 @@ export default function WelcomeSection() {
         <section className="text-center pt-4 md:pt-14 px-4">
             {/* Title */}
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-5xl font-bold md:mb-4">
-                Welcome to the LukazBd
+                Welcome to the Lukaz
             </h1>
 
             {/* Subtitle */}
