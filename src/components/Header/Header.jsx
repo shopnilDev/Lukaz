@@ -130,7 +130,7 @@ export default function Header({ mainMenus, categories, notices }) {
             {/* Logo */}
             <div className="w-[430px] flex justify-center">
               <Link href="/" className="text-xl sm:text-2xl font-bold">
-                Lukaz
+                LUKAZ
               </Link>
             </div>
 

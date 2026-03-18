@@ -5,42 +5,88 @@ import React, { useState } from "react";
 import { getImageUrl } from "@/utils/helpers";
 
 // Hardcoded outlet details with addresses, phone numbers, and map data
+// const outletDetails = {
+//   rajshahi: {
+//     nameEn: "Rajshahi Outlet",
+//     nameBn: "রাজশাহী আউটলেট",
+//     addressEn:
+//       "Kadirganj, Chal Potti, Beside Laz Pharma, Rajshahi.",
+//     addressBn:
+//       "কাদিরগঞ্জ, চাল পট্টি, লাজ ফার্মার পাশে, রাজশাহী।",
+//     manager: "01798091972",
+//     mapQuery: "Kadirganj+Chalpotti+Rajshahi+Bangladesh",
+//     mapLink:
+//       "https://maps.app.goo.gl/3WmrsRVco7pczPw77?g_st=aw",
+//   },
+//   dhaka: {
+//     nameEn: "Dhaka Outlet",
+//     nameBn: "ঢাকা আউটলেট",
+//     addressEn:
+//       "Uttara Azampur Sector-3 (Main Road Adjacent), London Plaza, 3rd Floor. (After passing Uttara Airport, going to House Building, on Azampur Main Road, opposite Shahjalal Islami Bank, you will see the Lukaz signboard)",
+//     addressBn:
+//       "উত্তরা আজমপুর সেক্টর-৩ (মেইন রোড সংলগ্ন) লন্ডন প্লাজা, তৃতীয় তলা। (উত্তরা এয়ারপোর্ট পার হয়ে, হাউজ বিল্ডিং যেতে, আজমপুর মেইন রোডে, শাহজালাল ইসলামী ব্যাংক এর বিপরীত পাশে Lukaz-লুকাজ এর সাইনবোর্ড দেখতে পাবেন)",
+//     manager: "01794034665",
+//     mapQuery: "Azampur+Sector+3+London+Plaza+Uttara+Dhaka+Bangladesh",
+//     mapLink:
+//       "https://maps.app.goo.gl/t7UfLom9xgwN168g7?g_st=aw",
+//   },
+//   sylhet: {
+//     nameEn: "Sylhet Outlet",
+//     nameBn: "সিলেট আউটলেট",
+//     addressEn:
+//       "Haat Super Mall, 2nd Floor, Uposhor, Sylhet.",
+//     addressBn:
+//       "হাট সুপার মল, দ্বিতীয় তলা, উপশহর, সিলেট।",
+//     manager: "01797273380",
+//     mapQuery: "Haat+Super+Mall+Uposhor+Sylhet+Bangladesh",
+//     mapLink:
+//       "https://maps.app.goo.gl/1AuBeBVAJUNs9ctU9?g_st=aw",
+//   },
+// };
+
 const outletDetails = {
   rajshahi: {
     nameEn: "Rajshahi Outlet",
     nameBn: "রাজশাহী আউটলেট",
-    addressEn:
-      "Kadirganj, Chal Potti, Beside Laz Pharma, Rajshahi.",
-    addressBn:
-      "কাদিরগঞ্জ, চাল পট্টি, লাজ ফার্মার পাশে, রাজশাহী।",
+    addressEn: "Kadirganj, Chal Potti, Beside Laz Pharma, Rajshahi.",
+    addressBn: "কাদিরগঞ্জ, চাল পট্টি, লাজ ফার্মার পাশে, রাজশাহী।",
     manager: "01798091972",
-    mapQuery: "Kadirganj+Chalpotti+Rajshahi+Bangladesh",
+
+    mapEmbed: "https://www.google.com/maps?q=LUKAZ+Kadirganj+Rajshahi+Bangladesh&output=embed",
+
+
     mapLink:
-      "https://www.google.com/maps/search/Kadirganj+Chalpotti+Laz+Pharma+Rajshahi+Bangladesh",
+      "https://maps.app.goo.gl/3WmrsRVco7pczPw77?g_st=aw",
   },
+
   dhaka: {
     nameEn: "Dhaka Outlet",
     nameBn: "ঢাকা আউটলেট",
     addressEn:
-      "Uttara Azampur Sector-3 (Main Road Adjacent), London Plaza, 3rd Floor. (After passing Uttara Airport, going to House Building, on Azampur Main Road, opposite Shahjalal Islami Bank, you will see the Lukaz signboard)",
+      "Uttara Azampur Sector-3 (Main Road Adjacent), London Plaza, 3rd Floor.",
     addressBn:
-      "উত্তরা আজমপুর সেক্টর-৩ (মেইন রোড সংলগ্ন) লন্ডন প্লাজা, তৃতীয় তলা। (উত্তরা এয়ারপোর্ট পার হয়ে, হাউজ বিল্ডিং যেতে, আজমপুর মেইন রোডে, শাহজালাল ইসলামী ব্যাংক এর বিপরীত পাশে Lukaz-লুকাজ এর সাইনবোর্ড দেখতে পাবেন)",
+      "উত্তরা আজমপুর সেক্টর-৩ (মেইন রোড সংলগ্ন) লন্ডন প্লাজা, তৃতীয় তলা।",
     manager: "01794034665",
-    mapQuery: "Azampur+Sector+3+London+Plaza+Uttara+Dhaka+Bangladesh",
+
+    mapEmbed:
+      "https://www.google.com/maps?q=LUKAZ+London+Plaza+Azampur+Sector+3+Uttara+Dhaka+Bangladesh&output=embed",
+
     mapLink:
-      "https://www.google.com/maps/search/Azampur+Sector+3+London+Plaza+Uttara+Dhaka+Bangladesh",
+      "https://maps.app.goo.gl/t7UfLom9xgwN168g7?g_st=aw",
   },
+
   sylhet: {
     nameEn: "Sylhet Outlet",
     nameBn: "সিলেট আউটলেট",
-    addressEn:
-      "Haat Super Mall, 2nd Floor, Uposhor, Sylhet.",
-    addressBn:
-      "হাট সুপার মল, দ্বিতীয় তলা, উপশহর, সিলেট।",
+    addressEn: "Haat Super Mall, 2nd Floor, Uposhor, Sylhet.",
+    addressBn: "হাট সুপার মল, দ্বিতীয় তলা, উপশহর, সিলেট।",
     manager: "01797273380",
-    mapQuery: "Haat+Super+Mall+Uposhor+Sylhet+Bangladesh",
+
+    mapEmbed:
+      "https://www.google.com/maps?q=LUKAZ+Super+Mall+Uposhor+Sylhet+Bangladesh&output=embed",
+
     mapLink:
-      "https://www.google.com/maps/search/Haat+Super+Mall+Uposhor+Sylhet+Bangladesh",
+      "https://maps.app.goo.gl/1AuBeBVAJUNs9ctU9?g_st=aw",
   },
 };
 
@@ -87,7 +133,7 @@ function MapModal({ isOpen, onClose, details }) {
         {/* Map iframe */}
         <div className="w-full h-[300px] sm:h-[350px]">
           <iframe
-            src={`https://maps.google.com/maps?q=${details.mapQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+            src={details?.mapEmbed}
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -357,4 +403,17 @@ export default function OutletsSectionClient({ outlets }) {
       </section>
     </>
   );
+}
+
+
+function getEmbedMapUrl(mapLink) {
+  if (!mapLink) return "";
+
+  // if it's a google short link, just return it
+  if (mapLink.includes("maps.app.goo.gl")) {
+    return mapLink;
+  }
+
+  const encoded = encodeURIComponent(mapLink);
+  return `https://www.google.com/maps?q=${encoded}&output=embed`;
 }
