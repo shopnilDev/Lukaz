@@ -305,6 +305,34 @@ function OutletCard({ outlet }) {
           )}
         </div>
 
+       <div className="flex justify-center">
+         <p
+          onClick={() => details && setShowMap(true)}
+          className="flex gap-2 text-center items-center py-0.5 cursor-pointer text-sm md:text-base hover:text-[#3A9E75] font-semibold hover:font-bold"
+        >
+          
+          <svg
+            className="w-4 h-4 md:w-5 md:h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            /> 
+          </svg>
+          Google Map
+        </p>
+       </div>
         {/* Name — Click to show location details */}
         <h3
           className={`mt-3 text-base sm:text-lg font-semibold text-gray-800 text-center ${details
