@@ -21,7 +21,7 @@ const CategoriesGrid = async () => {
 
 
   return (
-    <section className="py-10 bg-gradient-to-r from-[#8ae5bf] via-[#68bf9b] to-[#70bf9c]">
+    <section className="py-16 bg-gradient-to-r from-[#8ae5bf] via-[#68bf9b] to-[#70bf9c]">
       <div className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl font-semibold text-white space-grotesk">Shop by Category</h2>
         <p className="text-white mt-1 text-sm md:text-base space-grotesk">Find your perfect pair by category</p>
