@@ -17,7 +17,7 @@ function OrderSuccessContent() {
   return (
     <Container className="px-6 py-14">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-green-600">Payment Successful</h1>
+        <h1 className="text-2xl font-bold text-green-600">Order Successful</h1>
         <p>Your order has been successfully placed.</p>
         
         {orderId ? <p>Order ID: {orderId}</p> : <p>Loading...</p>}
