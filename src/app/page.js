@@ -47,7 +47,7 @@ export default async function Home() {
       <CategoriesGrid  />
 
       <Container>
-        <ShopByBrandsSlider brands={brands} />
+        {/* <ShopByBrandsSlider brands={brands} /> */}
       {/* featured Items/ best item */}
        {/* <FeatureItems featureItems={featureItems?.data} /> */}
       {/* {

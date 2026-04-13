@@ -4,10 +4,18 @@ import Link from 'next/link';
 import React from 'react'
 import { usePathname } from 'next/navigation';
 
+// const menuItems = [
+//   { label: 'Sneakers', href: '/shop/sneakers', id: 13 },
+//   { label: 'Outfits', href: '/shop/outfits', id: 16 },
+//   // { label: 'Luxury', href: '/shop/luxury', id: 22 },
+//   { label: 'Luxury', href: '/shop/luxury', id: 85 },
+//   { label: 'International Deal', href: '/international-shop' },
+// ];
 const menuItems = [
-  { label: 'Sneakers', href: '/shop/sneakers', id: 13 },
-  { label: 'Outfits', href: '/shop/outfits', id: 16 },
-  { label: 'Luxury', href: '/shop/luxury', id: 22 },
+  { label: 'Sneakers', href: '/shop/sneakers', id: 1 },
+  { label: 'Outfits', href: '/shop/outfits', id: 2 },
+  // { label: 'Luxury', href: '/shop/luxury', id: 22 },
+  { label: 'Luxury', href: '/shop/luxury', id: 85 },
   { label: 'International Deal', href: '/international-shop' },
 ];
 
