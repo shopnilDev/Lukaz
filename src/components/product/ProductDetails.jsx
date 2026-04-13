@@ -418,7 +418,7 @@ export default function ProductDetails({ product }) {
           <div className="bg-gray-100 p-4 rounded-md">
             {/* Selected Size */}
             {selectedSize && (
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-sm text-gray-600 mb-2">
                 Selected: Size {selectedSize}
 
               </p>
@@ -426,12 +426,12 @@ export default function ProductDetails({ product }) {
 
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-gray-900">SELECT SIZE</h3>
-              <button
+              {/* <button
                 onClick={() => setIsSizeModalOpen(true)}
                 className="text-sm text-gray-900 underline hover:text-gray-700"
               >
                 Size Chart
-              </button>
+              </button> */}
             </div>
 
             {/* Size Options */}
