@@ -58,11 +58,11 @@ export default function ProductDetails({ product }) {
     setSelectedColourSlug(product?.slug)
     setSelectedItemImage(product?.color_icon_small)
 
-    let galleriesArray=[];
+    let galleriesArray = [];
     if (product?.color_galleries) {
       galleriesArray = JSON?.parse(product?.color_galleries)
     }
-     setSelectedColourGalleries([product?.color_thumbnails,...galleriesArray])
+    setSelectedColourGalleries([product?.color_thumbnails, ...galleriesArray])
     // setSelectedColourGalleries(galleriesArray)
     // const calculate_total_stock = product?.additionals.reduce((total, item) => total + (item.stocks_sum_stock), 0)
     const calculate_total_stock = product?.additionals?.reduce(
@@ -93,7 +93,7 @@ export default function ProductDetails({ product }) {
   const handleColorSelect = (item) => {
     const galleriesArray = JSON.parse(item?.color_galleries)
     // setSelectedColourGalleries(galleriesArray)
-    setSelectedColourGalleries([item?.color_thumbnails,...galleriesArray])
+    setSelectedColourGalleries([item?.color_thumbnails, ...galleriesArray])
     setSelectedColor(item?.color)
     setSelectedColourSlug(item?.slug)
     setMainImage(item?.color_thumbnails)
@@ -586,7 +586,7 @@ export default function ProductDetails({ product }) {
       {product?.product?.description ? <div className="mb-16 overflow-hidden">
         <h2 className="text-2xl md:text-3xl font-bold text-[#3A9E75] mb-6">Product Description</h2>
         <div
-          className="prose max-w-none text-gray-700 leading-relaxed"
+          className="prose max-w-none text-gray-700 leading-relaxed "
           dangerouslySetInnerHTML={{ __html: product?.product?.description || "No Product Description" }}
         />
 

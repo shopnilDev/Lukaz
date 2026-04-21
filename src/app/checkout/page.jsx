@@ -18,7 +18,7 @@ import CustomSelectInputWithSearchOption from "@/components/shared/CustomSelectI
 
 export default function CartCheckoutPage() {
   const router = useRouter()
-  const { state } = useContext(CartContext);
+  const { state, dispatch } = useContext(CartContext);
   const { state: userState, dispatch: dispatchUserContext } = useContext(UserContext);
   const user = userState?.user
   const contextCartItems = state?.items;
@@ -352,6 +352,7 @@ export default function CartCheckoutPage() {
         if (response?.data?.order_no) {
 
           toast.success(`Your order has been placed successfully!`);
+          dispatch({ type: "CLEAR_CART" });
           router.push(`/order-success?order_id=${response?.data?.order_no}`)
 
         } else if (response?.data?.payment_url) {
@@ -359,6 +360,7 @@ export default function CartCheckoutPage() {
 
           // console.log("from checkout", response)
 
+          dispatch({ type: "CLEAR_CART" });
           window.location.href = response?.data?.payment_url;
         } else {
           console.error("Order failed:", response.data);
