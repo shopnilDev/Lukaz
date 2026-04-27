@@ -28,7 +28,7 @@ export default async function Home() {
    const shopByCategories = await getShopByCategories()
 
   // const reviews=await getReviews();
-  // console.log("featureItems",featureItems)
+
 
 
   return (
