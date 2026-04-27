@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Container from "@/components/shared/Container";
 import axiosInstance from "@/utils/axiosInstance";
 import ProductListSkeleton from "../Skeletons/ProductListSkeleton";
@@ -13,6 +13,8 @@ export default function ShopByCategories({ slug }) {
   const [catInfo, setCatInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [preloadedProducts, setPreloadedProducts] = useState(null);
+  const observerRef = useRef(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -59,6 +61,7 @@ export default function ShopByCategories({ slug }) {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        setPreloadedProducts(null);
         const { data } = await axiosInstance.get(
           `/categories/${slug}/with/products?page=1&per_page=${per_page}`
         );
@@ -77,10 +80,43 @@ export default function ShopByCategories({ slug }) {
     fetchProducts();
   }, [slug]);
 
+  // Preload Next Page in the background
+  useEffect(() => {
+    const preloadNextPage = async () => {
+      if (!loading && !loadingMore && !preloadedProducts && currentPage < totalPages) {
+        try {
+          const nextPage = currentPage + 1;
+          const { data } = await axiosInstance.get(
+            `/categories/${slug}/with/products?page=${nextPage}&per_page=${per_page}`
+          );
+          setPreloadedProducts(data?.products?.data || []);
+        } catch (error) {
+          console.error("Failed to preload next page", error);
+        }
+      }
+    };
+
+    // Delay preloading slightly to allow current page images to load first
+    const timer = setTimeout(() => {
+      preloadNextPage();
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [currentPage, totalPages, loading, loadingMore, preloadedProducts, slug]);
+
   // Load More handler
   const handleLoadMore = async () => {
     if (currentPage >= totalPages || loadingMore) return;
 
+    // Use preloaded data instantly if available
+    if (preloadedProducts) {
+      setProducts((prev) => [...prev, ...preloadedProducts]);
+      setCurrentPage((prev) => prev + 1);
+      setPreloadedProducts(null);
+      return;
+    }
+
+    // Fallback if scrolling is faster than preloading
     try {
       setLoadingMore(true);
 
@@ -98,6 +134,28 @@ export default function ShopByCategories({ slug }) {
       setLoadingMore(false);
     }
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loadingMore && currentPage < totalPages) {
+          handleLoadMore();
+        }
+      },
+      { rootMargin: "600px", threshold: 0.1 }
+    );
+
+    const currentRef = observerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [currentPage, totalPages, loadingMore, slug]);
 
   const productListSection = loading ? (
     <ProductListSkeleton />
@@ -122,21 +180,17 @@ export default function ShopByCategories({ slug }) {
         ))}
       </div>
 
-      {/* Load More Button */}
+      {/* Infinity Scroll Target */}
       {currentPage < totalPages && (
-        <div className="flex justify-center mt-10">
-          <button
-            onClick={handleLoadMore}
-            disabled={loadingMore}
-            className={cn(
-              "px-5 py-2 md:px-6 md:py-3 rounded border transition-all cursor-pointer",
-              loadingMore
-                ? "bg-gray-200 text-gray-500"
-                : "bg-[#3A9E75] text-white hover:bg-[#286b4f]"
-            )}
-          >
-            {loadingMore ? "Loading..." : "Load More"}
-          </button>
+        <div ref={observerRef} className="flex justify-center mt-10 min-h-[40px] items-center">
+          {loadingMore ? (
+            <div className="flex gap-2 items-center text-gray-500">
+              <span className="w-5 h-5 border-2 border-gray-300 border-t-[#3A9E75] rounded-full animate-spin"></span>
+              Loading more...
+            </div>
+          ) : (
+            <div className="h-10 w-full"></div>
+          )}
         </div>
       )}
     </>
