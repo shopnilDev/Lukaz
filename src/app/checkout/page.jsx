@@ -37,7 +37,7 @@ export default function CartCheckoutPage() {
   const [address, setAddress] = useState("")
   const [selectedDistrict, setSelectedDistrict] = useState("")
   const [shippingCharge, setShippingCharge] = useState(0)
-   const [expressDeliveryCharge, setExpressDeliveryCharge] = useState(3000)
+  const [expressDeliveryCharge, setExpressDeliveryCharge] = useState(3000)
   const [discountAmount, setDiscountAmount] = useState(0)
   const [isPreOrderItemInCart, setIsPreOrderItemInCart] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -742,7 +742,8 @@ export default function CartCheckoutPage() {
                   </div>
                 </div>
 
-                <div className="flex justify-between">
+                {/* Bkash payment selection--- currently off. in future will be live */}
+                {/* <div className="flex justify-between">
 
                   <div className="flex items-center -mt-1.5">
                     <input
@@ -764,9 +765,9 @@ export default function CartCheckoutPage() {
                     width={45}
                     height={30}
                   />
-                </div>
+                </div> */}
 
-                                
+
                 <div className="flex items-center ">
                   <input
                     type="radio"
@@ -780,7 +781,7 @@ export default function CartCheckoutPage() {
                   <label htmlFor="cod" className="ml-3 block text-base font-medium text-gray-700">
                     Cash on Delivery
                   </label>
-                </div> 
+                </div>
 
               </div>
             </div>
