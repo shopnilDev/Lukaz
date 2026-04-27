@@ -20,6 +20,8 @@ export default function ShopInternational({ brands, categories }) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
+  const [preloadedProducts, setPreloadedProducts] = useState(null)
+  const observerRef = useRef(null)
 
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -68,6 +70,7 @@ export default function ShopInternational({ brands, categories }) {
     const fetchProducts = async () => {
       try {
         setLoading(true)
+        setPreloadedProducts(null)
 
         const query = new URLSearchParams()
         query.append("category_id", filterProductState?.category || "")
@@ -93,9 +96,48 @@ export default function ShopInternational({ brands, categories }) {
     fetchProducts()
   }, [debouncedSearchTerm, filterProductState])
 
+  // Preload Next Page
+  useEffect(() => {
+    const preloadNextPage = async () => {
+      if (!loading && !loadingMore && !preloadedProducts && currentPage < totalPages) {
+        try {
+          const nextPage = currentPage + 1
+
+          const query = new URLSearchParams()
+          query.append("category_id", filterProductState?.category || "")
+          query.append("search", filterProductState?.search || "")
+          query.append("brand_id", filterProductState?.brand || "")
+          query.append("color", filterProductState?.color || "")
+          query.append("sort_by_price", filterProductState?.sort || "")
+
+          const { data } = await axiosInstance.get(
+            `/products?international=1&${query.toString()}&page=${nextPage}&per_page=${per_page}`
+          )
+
+          setPreloadedProducts(data?.data?.data || [])
+        } catch (err) {
+          console.error("Preload failed", err)
+        }
+      }
+    }
+
+    const timer = setTimeout(() => {
+      preloadNextPage()
+    }, 800)
+
+    return () => clearTimeout(timer)
+  }, [currentPage, totalPages, loading, loadingMore, preloadedProducts, filterProductState, debouncedSearchTerm])
+
   // Load More
   const handleLoadMore = async () => {
     if (currentPage >= totalPages || loadingMore) return
+
+    if (preloadedProducts) {
+      setProducts(prev => [...prev, ...preloadedProducts])
+      setCurrentPage(prev => prev + 1)
+      setPreloadedProducts(null)
+      return
+    }
 
     try {
       setLoadingMore(true)
@@ -120,6 +162,28 @@ export default function ShopInternational({ brands, categories }) {
       setLoadingMore(false)
     }
   }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loadingMore && currentPage < totalPages) {
+          handleLoadMore();
+        }
+      },
+      { rootMargin: "600px", threshold: 0.1 }
+    );
+
+    const currentRef = observerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [currentPage, totalPages, loadingMore, filterProductState, debouncedSearchTerm]);
 
   // Click বাইরে → dropdown close
   useEffect(() => {
@@ -198,18 +262,15 @@ export default function ShopInternational({ brands, categories }) {
         </div>
 
         {currentPage < totalPages && (
-          <div className="flex justify-center mt-10">
-            <button
-              onClick={handleLoadMore}
-              disabled={loadingMore}
-              className={`px-6 py-3 rounded border transition-all
-                ${loadingMore
-                  ? "bg-gray-200 text-gray-500"
-                  : "bg-black text-white hover:bg-gray-800"
-                }`}
-            >
-              {loadingMore ? "Loading..." : "Load More"}
-            </button>
+          <div ref={observerRef} className="flex justify-center mt-10 min-h-[40px] items-center">
+            {loadingMore ? (
+              <div className="flex gap-2 items-center text-gray-500">
+                <span className="w-5 h-5 border-2 border-gray-300 border-t-black rounded-full animate-spin"></span>
+                Loading more...
+              </div>
+            ) : (
+              <div className="h-10 w-full"></div>
+            )}
           </div>
         )}
       </>
